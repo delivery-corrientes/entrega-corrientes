@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Delivery Corrientes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Panel Admin</h1>
+
+<div id="panel"></div>
+
+<br>
+<button onclick="bloquear()">Bloquear pedido</button>
+<button onclick="limpiar()">Borrar pedido</button>
+
+<br><br>
+<a href="index.html"><button>Volver al inicio</button></a>
+
+<script>
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
+  const calificacion = JSON.parse(localStorage.getItem("calificacion"));
+  const panel = document.getElementById("panel");
+
+  if (!pedido) {
+    panel.innerHTML = "<p>No hay pedidos activos</p>";
+  } else {
+    panel.innerHTML = `
+      <h3>Pedido</h3>
+      <p><strong>Producto:</strong> ${pedido.producto}</p>
+      <p><strong>Cantidad:</strong> ${pedido.cantidad}</p>
+      <p><strong>Estado:</strong> ${pedido.estado}</p>
+      <p><strong>Pago:</strong> ${pedido.pago}</p>
+
+      <h3>Alias</h3>
+      <p><strong>Cliente:</strong> ${pedido.aliasCliente}</p>
+      <p><strong>Comercio:</strong> ${pedido.aliasComercio || "-"}</p>
+      <p><strong>Repartidor:</strong> ${pedido.aliasRepartidor || "-"}</p>
+    `;
+
+    if (calificacion) {
+      panel.innerHTML += `
+        <h3>Calificaciones</h3>
+        <p>⭐ Repartidor: ${calificacion.repartidor}</p>
+        <p>⭐ Comercio: ${calificacion.comercio}</p>
+        <p>Fecha: ${calificacion.fecha}</p>
+      `;
+    }
+  }
+
+  function bloquear() {
+    if (!pedido) return;
+    pedido.estado = "BLOQUEADO POR ADMIN";
+    localStorage.setItem("pedido", JSON.stringify(pedido));
+    alert("Pedido bloqueado");
+    location.reload();
+  }
+
+  function limpiar() {
+    localStorage.clear();
+    alert("Sistema limpiado");
+    location.reload();
+  }
+</script>
+
+</body>
+</html>

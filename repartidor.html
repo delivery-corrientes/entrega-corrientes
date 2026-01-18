@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repartidor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Pedidos disponibles</h1>
+
+  <div id="pedido"></div>
+
+  <h3>Alias del repartidor</h3>
+  <input id="aliasRepartidor" type="text" placeholder="Alias / CBU del repartidor"
+    style="width:80%; padding:12px; margin:10px;"><br>
+
+  <button onclick="tomarPedido()">Tomar pedido</button>
+
+  <br><br>
+  <a href="index.html"><button>Volver</button></a>
+
+  <script>
+    const pedido = JSON.parse(localStorage.getItem("pedido"));
+    const contenedor = document.getElementById("pedido");
+
+    if (!pedido || pedido.estado !== "ACEPTADO POR COMERCIO") {
+      contenedor.innerHTML = "<p>No hay pedidos disponibles</p>";
+      document.querySelector("button").style.display = "none";
+    } else {
+      contenedor.innerHTML = `
+        <p><strong>Producto:</strong> ${pedido.producto}</p>
+        <p><strong>Cantidad:</strong> ${pedido.cantidad}</p>
+        <p><strong>Forma de pago:</strong> ${pedido.pago}</p>
+        <p><strong>Estado:</strong> ${pedido.estado}</p>
+      `;
+    }
+
+    function tomarPedido() {
+      const alias = document.getElementById("aliasRepartidor").value;
+
+      if (!alias) {
+        alert("Ingresá tu alias");
+        return;
+      }
+
+      pedido.aliasRepartidor = alias;
+      pedido.estado = "EN CAMINO";
+
+      localStorage.setItem("pedido", JSON.stringify(pedido));
+      alert("Pedido tomado. Dirigite al comercio.");
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>

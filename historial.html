@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Historial de pedidos</h1>
+
+<div id="historial"></div>
+
+<br>
+<a href="index.html"><button>Volver al inicio</button></a>
+
+<script>
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
+  const calificacion = JSON.parse(localStorage.getItem("calificacion"));
+  const contenedor = document.getElementById("historial");
+
+  if (!pedido) {
+    contenedor.innerHTML = "<p>No hay pedidos registrados</p>";
+  } else {
+    contenedor.innerHTML = `
+      <p><strong>Producto:</strong> ${pedido.producto}</p>
+      <p><strong>Cantidad:</strong> ${pedido.cantidad}</p>
+      <p><strong>Estado final:</strong> ${pedido.estado}</p>
+      <p><strong>Pago:</strong> ${pedido.pago}</p>
+      <p><strong>Alias cliente:</strong> ${pedido.aliasCliente}</p>
+      <p><strong>Alias comercio:</strong> ${pedido.aliasComercio || "-"}</p>
+      <p><strong>Alias repartidor:</strong> ${pedido.aliasRepartidor || "-"}</p>
+      <hr>
+    `;
+
+    if (calificacion) {
+      contenedor.innerHTML += `
+        <p><strong>⭐ Calificación repartidor:</strong> ${calificacion.repartidor}</p>
+        <p><strong>⭐ Calificación comercio:</strong> ${calificacion.comercio}</p>
+        <p><strong>Fecha:</strong> ${calificacion.fecha}</p>
+      `;
+    }
+  }
+</script>
+
+</body>
+</html>
