@@ -8,62 +8,45 @@
 </head>
 <body>
 
-<h1>Panel Admin</h1>
+<h1>🧠 Panel Administrador</h1>
 
-<div id="panel"></div>
+<hr>
 
-<br>
-<button onclick="bloquear()">Bloquear pedido</button>
-<button onclick="limpiar()">Borrar pedido</button>
+<h2>🏪 Comercios registrados</h2>
+<ul>
+  <li>Pizzería La 12 — CUIL: 20-12345678-9</li>
+  <li>Kiosco Don Pepe — CUIL: 23-87654321-4</li>
+</ul>
+
+<hr>
+
+<h2>🛵 Repartidores registrados</h2>
+<ul>
+  <li>Juan Pérez — DNI: ***123 — Moto: Honda Wave — Casco: ✔</li>
+  <li>María López — DNI: ***456 — Bicicleta — Casco: ✔</li>
+</ul>
+
+<hr>
+
+<h2>📦 Pedidos activos</h2>
+<ul>
+  <li>Pedido #001 — Estado: En reparto</li>
+  <li>Pedido #002 — Estado: Pendiente</li>
+</ul>
+
+<hr>
+
+<h2>⚠️ Acciones</h2>
+<button>Bloquear comercio</button>
+<button>Suspender repartidor</button>
+<button>Ver reclamos</button>
 
 <br><br>
-<a href="index.html"><button>Volver al inicio</button></a>
 
-<script>
-  const pedido = JSON.parse(localStorage.getItem("pedido"));
-  const calificacion = JSON.parse(localStorage.getItem("calificacion"));
-  const panel = document.getElementById("panel");
-
-  if (!pedido) {
-    panel.innerHTML = "<p>No hay pedidos activos</p>";
-  } else {
-    panel.innerHTML = `
-      <h3>Pedido</h3>
-      <p><strong>Producto:</strong> ${pedido.producto}</p>
-      <p><strong>Cantidad:</strong> ${pedido.cantidad}</p>
-      <p><strong>Estado:</strong> ${pedido.estado}</p>
-      <p><strong>Pago:</strong> ${pedido.pago}</p>
-
-      <h3>Alias</h3>
-      <p><strong>Cliente:</strong> ${pedido.aliasCliente}</p>
-      <p><strong>Comercio:</strong> ${pedido.aliasComercio || "-"}</p>
-      <p><strong>Repartidor:</strong> ${pedido.aliasRepartidor || "-"}</p>
-    `;
-
-    if (calificacion) {
-      panel.innerHTML += `
-        <h3>Calificaciones</h3>
-        <p>⭐ Repartidor: ${calificacion.repartidor}</p>
-        <p>⭐ Comercio: ${calificacion.comercio}</p>
-        <p>Fecha: ${calificacion.fecha}</p>
-      `;
-    }
-  }
-
-  function bloquear() {
-    if (!pedido) return;
-    pedido.estado = "BLOQUEADO POR ADMIN";
-    localStorage.setItem("pedido", JSON.stringify(pedido));
-    alert("Pedido bloqueado");
-    location.reload();
-  }
-
-  function limpiar() {
-    localStorage.clear();
-    alert("Sistema limpiado");
-    location.reload();
-  }
-</script>
+<a href="index.html">
+  <button>Volver al inicio</button>
+</a>
 
 </body>
 </html>
+
