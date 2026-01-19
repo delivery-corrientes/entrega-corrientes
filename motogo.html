@@ -11,13 +11,29 @@
   <h1>🛵 Moto Go</h1>
   <p>Traslados en moto dentro de Corrientes Capital</p>
 
-  <input type="text" placeholder="Punto de partida" style="width:80%; padding:12px; margin:10px;"><br>
-  <input type="text" placeholder="Destino" style="width:80%; padding:12px; margin:10px;"><br>
+  <input id="origen" type="text" placeholder="Punto de partida" style="width:80%; padding:12px; margin:10px;"><br>
+  <input id="destino" type="text" placeholder="Destino" style="width:80%; padding:12px; margin:10px;"><br>
 
-  <button>Solicitar moto</button>
+  <button onclick="crearViaje()">Solicitar moto</button>
 
-  <br><br>
+  <p id="estado" style="margin-top:20px;"></p>
+
+  <br>
   <a href="login.html"><button>Volver</button></a>
+
+<script>
+function crearViaje() {
+  if (localStorage.getItem("viajeTomado")) {
+    document.getElementById("estado").innerText =
+      "❌ Este viaje ya fue tomado por un repartidor.";
+    return;
+  }
+
+  localStorage.setItem("viajeTomado", "pendiente");
+  document.getElementById("estado").innerText =
+    "✅ Viaje creado. Esperando repartidor...";
+}
+</script>
 
 </body>
 </html>
