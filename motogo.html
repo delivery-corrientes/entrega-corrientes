@@ -3,54 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moto Go - Delivery Corrientes</title>
+  <title>Registro Moto Go</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🛵 Moto Go</h1>
-  <p>Traslados en moto dentro de Corrientes Capital</p>
+  <h1>Registro Moto Go</h1>
+  <p>Datos obligatorios del conductor</p>
 
-  <input id="origen" type="text" placeholder="Punto de partida" style="width:80%; padding:12px; margin:10px;"><br>
-  <input id="destino" type="text" placeholder="Destino" style="width:80%; padding:12px; margin:10px;"><br>
+  <input type="text" placeholder="Nombre completo" style="width:80%; padding:12px; margin:10px;"><br>
+  <input type="text" placeholder="DNI (últimos 3 dígitos)" style="width:80%; padding:12px; margin:10px;"><br>
+  <input type="text" placeholder="Modelo de moto / bicicleta" style="width:80%; padding:12px; margin:10px;"><br>
+  <input type="text" placeholder="Patente (si corresponde)" style="width:80%; padding:12px; margin:10px;"><br>
+  <input type="text" placeholder="Alias para cobros" style="width:80%; padding:12px; margin:10px;"><br>
 
-  <button onclick="crearViaje()">Solicitar moto</button>
+  <p style="font-size:14px; color:#555;">
+    ✔ Seguro vigente<br>
+    ✔ Uso obligatorio de casco<br>
+    ✔ Identidad verificada
+  </p>
 
-  <div id="estado" style="margin-top:20px;"></div>
+  <button>Enviar registro</button>
 
-  <br>
-  <a href="login.html"><button>Volver</button></a>
+  <br><br>
 
-<script>
-const precioViaje = 2000;
-const comision = 0.10;
-
-function crearViaje() {
-  if (localStorage.getItem("viajeEstado")) {
-    document.getElementById("estado").innerHTML =
-      "❌ Ya hay un viaje en curso.";
-    return;
-  }
-
-  localStorage.setItem("viajeEstado", "pendiente");
-
-  const tuGanancia = precioViaje * comision;
-  const repartidorGana = precioViaje - tuGanancia;
-
-  document.getElementById("estado").innerHTML = `
-    <p><strong>Precio del viaje:</strong> $${precioViaje}</p>
-    <p><strong>Comisión plataforma (10%):</strong> $${tuGanancia}</p>
-    <p><strong>Repartidor cobra:</strong> $${repartidorGana}</p>
-    <button onclick="confirmarPago()">Confirmar pago</button>
-  `;
-}
-
-function confirmarPago() {
-  localStorage.setItem("viajeEstado", "pagado");
-  document.getElementById("estado").innerHTML =
-    "✅ Pago confirmado. Esperando repartidor...";
-}
-</script>
+  <a href="motogo.html">
+    <button>Volver</button>
+  </a>
 
 </body>
 </html>
