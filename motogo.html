@@ -16,22 +16,39 @@
 
   <button onclick="crearViaje()">Solicitar moto</button>
 
-  <p id="estado" style="margin-top:20px;"></p>
+  <div id="estado" style="margin-top:20px;"></div>
 
   <br>
   <a href="login.html"><button>Volver</button></a>
 
 <script>
+const precioViaje = 2000;
+const comision = 0.10;
+
 function crearViaje() {
-  if (localStorage.getItem("viajeTomado")) {
-    document.getElementById("estado").innerText =
-      "❌ Este viaje ya fue tomado por un repartidor.";
+  if (localStorage.getItem("viajeEstado")) {
+    document.getElementById("estado").innerHTML =
+      "❌ Ya hay un viaje en curso.";
     return;
   }
 
-  localStorage.setItem("viajeTomado", "pendiente");
-  document.getElementById("estado").innerText =
-    "✅ Viaje creado. Esperando repartidor...";
+  localStorage.setItem("viajeEstado", "pendiente");
+
+  const tuGanancia = precioViaje * comision;
+  const repartidorGana = precioViaje - tuGanancia;
+
+  document.getElementById("estado").innerHTML = `
+    <p><strong>Precio del viaje:</strong> $${precioViaje}</p>
+    <p><strong>Comisión plataforma (10%):</strong> $${tuGanancia}</p>
+    <p><strong>Repartidor cobra:</strong> $${repartidorGana}</p>
+    <button onclick="confirmarPago()">Confirmar pago</button>
+  `;
+}
+
+function confirmarPago() {
+  localStorage.setItem("viajeEstado", "pagado");
+  document.getElementById("estado").innerHTML =
+    "✅ Pago confirmado. Esperando repartidor...";
 }
 </script>
 
