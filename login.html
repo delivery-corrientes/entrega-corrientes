@@ -3,36 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ingreso - Delivery Corrientes</title>
+  <title>Login - Delivery Corrientes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>Ingreso</h1>
-  <p>Seleccioná tu perfil</p>
+<h1>Ingresar</h1>
 
-  <input type="text" placeholder="Usuario" style="width:80%; padding:12px; margin:10px;"><br>
-  <input type="password" placeholder="Contraseña" style="width:80%; padding:12px; margin:10px;"><br>
+<p>
+  <input type="checkbox" id="legal">
+  Acepto los <a href="legal.html" target="_blank">Términos y Condiciones</a>
+</p>
 
-  <div class="menu">
-    <a href="cliente.html"><button>Ingresar como Cliente</button></a>
-    <a href="comercio.html"><button>Ingresar como Comercio</button></a>
-    <a href="repartidor.html"><button>Ingresar como Repartidor</button></a>
-  </div>
+<button onclick="entrar()">Continuar</button>
 
-  <hr style="margin:30px 0;">
-
-  <h2>Otros servicios</h2>
-  <p>Traslados rápidos en moto dentro de Corrientes Capital</p>
-
-  <div class="menu">
-    <a href="motogo.html">
-      <button>🛵 Moto Go</button>
-    </a>
-  </div>
-
-  <br>
-  <a href="index.html"><button>Volver</button></a>
+<script>
+function entrar() {
+  if (!document.getElementById("legal").checked) {
+    alert("Debés aceptar los términos para continuar");
+    return;
+  }
+  location.href = "index.html";
+}
+</script>
 
 </body>
 </html>
+
