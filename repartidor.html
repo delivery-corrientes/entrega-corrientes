@@ -9,45 +9,49 @@
 <body>
 
   <h1>🛵 Repartidor</h1>
-  <p>Viajes Moto Go disponibles</p>
+  <p>Estado del viaje Moto Go</p>
 
-  <div id="viajeBox"></div>
+  <div id="box"></div>
 
   <br>
   <a href="login.html"><button>Volver</button></a>
 
 <script>
-const box = document.getElementById("viajeBox");
-const estado = localStorage.getItem("viajeTomado");
+const box = document.getElementById("box");
+const estado = localStorage.getItem("viajeEstado");
 
 if (!estado) {
-  box.innerHTML = "<p>No hay viajes disponibles.</p>";
-} else if (estado === "pendiente") {
+  box.innerHTML = "<p>No hay viajes.</p>";
+} 
+else if (estado === "pagado") {
   box.innerHTML = `
-    <p><strong>Viaje disponible</strong></p>
-    <button onclick="tomarViaje()">Tomar viaje</button>
+    <p>💰 Viaje pagado</p>
+    <button onclick="tomar()">Tomar viaje</button>
   `;
-} else if (estado === "tomado") {
+} 
+else if (estado === "tomado") {
   box.innerHTML = `
-    <p>🚦 Viaje en curso</p>
-    <button onclick="finalizarViaje()">Finalizar viaje</button>
+    <p>🚦 En viaje</p>
+    <button onclick="finalizar()">Finalizar viaje</button>
   `;
-} else if (estado === "finalizado") {
+} 
+else if (estado === "finalizado") {
   box.innerHTML = "<p>✅ Viaje finalizado</p>";
 }
 
-function tomarViaje() {
-  localStorage.setItem("viajeTomado", "tomado");
+function tomar() {
+  localStorage.setItem("viajeEstado", "tomado");
   location.reload();
 }
 
-function finalizarViaje() {
-  localStorage.setItem("viajeTomado", "finalizado");
+function finalizar() {
+  localStorage.setItem("viajeEstado", "finalizado");
   location.reload();
 }
 </script>
 
 </body>
 </html>
+
 
 
