@@ -3,71 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagos y Comisiones - Delivery Corrientes</title>
+  <title>Pagos - Delivery Corrientes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>💰 Pagos y Comisiones</h1>
-<p>Cómo se paga y quién cobra</p>
+  <h1>💰 Pago del pedido</h1>
 
-<hr>
+  <p><strong>Producto:</strong> Pizza muzzarella</p>
+  <p><strong>Subtotal:</strong> $10.000</p>
+  <p><strong>Envío:</strong> $1.500</p>
 
-<h2>👤 Cliente</h2>
-<ul>
-  <li>El cliente paga el pedido ANTES de salir</li>
-  <li>Puede pagar en efectivo o billetera virtual</li>
-  <li>El pago se realiza directamente al comercio</li>
-</ul>
+  <hr>
 
-<hr>
+  <p><strong>Total pagado por el cliente:</strong> $11.500</p>
 
-<h2>🏪 Comercio</h2>
-<ul>
-  <li>Debe informar si acepta efectivo o billetera virtual</li>
-  <li>Recibe el pago del pedido</li>
-  <li>Paga el envío al repartidor</li>
-  <li>La plataforma retiene un <strong>10% de comisión</strong></li>
-</ul>
+  <hr>
 
-<hr>
+  <p>📊 Distribución del pago</p>
 
-<h2>🛵 Repartidor / Moto Go</h2>
-<ul>
-  <li>No adelanta dinero</li>
-  <li>Cobra el envío al finalizar</li>
-  <li>El cobro puede ser en efectivo o transferencia</li>
-</ul>
+  <ul style="text-align:left; max-width:300px; margin:auto;">
+    <li>🏪 Comercio: $9.000</li>
+    <li>🛵 Repartidor (envío): $1.500</li>
+    <li>🧠 Plataforma (10%): $1.000</li>
+  </ul>
 
-<hr>
+  <hr>
 
-<h2>📊 Comisión de la plataforma</h2>
-<ul>
-  <li>La comisión es del <strong>10%</strong></li>
-  <li>Se descuenta del comercio por cada pedido</li>
-  <li>Cubre uso de la plataforma y soporte</li>
-</ul>
+  <p><strong>Forma de pago:</strong></p>
+  <label><input type="radio" name="pago"> Efectivo</label><br>
+  <label><input type="radio" name="pago"> Billetera virtual</label>
 
-<hr>
+  <br><br>
 
-<h2>⚠️ Casos especiales</h2>
-<ul>
-  <li>Si el cliente no recibe el pedido, no se cobra envío</li>
-  <li>Si el pedido fue preparado, el comercio decide</li>
-  <li>La plataforma no se hace responsable por pérdidas</li>
-</ul>
+  <a href="pedido_enviado.html">
+    <button>Confirmar pago</button>
+  </a>
 
-<hr>
+  <br><br>
 
-<p style="font-size:14px; color:#555;">
-El uso de la plataforma implica la aceptación de estas condiciones.
-</p>
-
-<br>
-
-<a href="index.html">
-  <button>Volver al inicio</button>
-</a>
+  <a href="index.html">
+    <button>Volver al inicio</button>
+  </a>
 
 </body>
 </html>
