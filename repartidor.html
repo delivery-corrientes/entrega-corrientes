@@ -2,42 +2,41 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro Repartidor - Delivery Corrientes</title>
+  <title>Registro de Repartidor</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🛵 Registro de Repartidor</h1>
-  <p>Completá los datos obligatorios para operar</p>
+<h1>🛵 Registro de Repartidor</h1>
+<p>Completá los datos obligatorios para operar</p>
 
-  <input type="text" placeholder="Nombre completo" style="width:80%; padding:12px; margin:8px;"><br>
+<form onsubmit="registrarRepartidor(event)">
+  <input type="text" placeholder="Nombre completo" required><br><br>
+  <input type="text" placeholder="DNI (últimos 3 dígitos)" required><br><br>
+  <input type="text" placeholder="Modelo de moto o bicicleta" required><br><br>
+  <input type="text" placeholder="Alias para cobros" required><br><br>
 
-  <input type="text" placeholder="DNI (últimos 3 dígitos)" style="width:80%; padding:12px; margin:8px;"><br>
+  <label><input type="checkbox" required> Seguro vigente</label><br>
+  <label><input type="checkbox" required> Uso obligatorio de casco</label><br><br>
 
-  <input type="text" placeholder="Modelo de moto o bicicleta" style="width:80%; padding:12px; margin:8px;"><br>
+  <button type="submit">Enviar registro</button>
+</form>
 
-  <input type="text" placeholder="Patente (si corresponde)" style="width:80%; padding:12px; margin:8px;"><br>
+<br>
+<a href="index.html"><button>Volver al inicio</button></a>
 
-  <input type="text" placeholder="Alias para cobros" style="width:80%; padding:12px; margin:8px;"><br>
+<script>
+  // 🚨 SI YA ESTÁ REGISTRADO, IR AL PANEL
+  if (localStorage.getItem("repartidorRegistrado") === "true") {
+    window.location.href = "repartidor_panel.html";
+  }
 
-  <hr>
-
-  <label><input type="checkbox"> ✔ Seguro vigente obligatorio</label><br>
-  <label><input type="checkbox"> ✔ Uso obligatorio de casco</label><br>
-  <label><input type="checkbox"> ✔ Identidad verificada</label><br>
-
-  <br>
-
-  <a href="repartidor_panel.html">
-    <button>Enviar registro</button>
-  </a>
-
-  <br><br>
-
-  <a href="index.html">
-    <button>Volver al inicio</button>
-  </a>
+  function registrarRepartidor(e) {
+    e.preventDefault();
+    localStorage.setItem("repartidorRegistrado", "true");
+    window.location.href = "repartidor_panel.html";
+  }
+</script>
 
 </body>
 </html>
