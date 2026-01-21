@@ -2,49 +2,50 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagos - Delivery Corrientes</title>
+  <title>Pago del pedido - Delivery Corrientes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>💰 Pago del pedido</h1>
+<h1>💰 Pago del pedido</h1>
 
-  <p><strong>Producto:</strong> Pizza muzzarella</p>
-  <p><strong>Subtotal:</strong> $10.000</p>
-  <p><strong>Envío:</strong> $1.500</p>
+<p><strong>Producto:</strong> Pizza muzzarella</p>
+<p><strong>Subtotal:</strong> $10.000</p>
+<p><strong>Envío:</strong> $1.500</p>
 
-  <hr>
+<hr>
 
-  <p><strong>Total pagado por el cliente:</strong> $11.500</p>
+<p><strong>Total pagado por el cliente:</strong> $11.500</p>
 
-  <hr>
+<h2>📊 Distribución del pago</h2>
 
-  <p>📊 Distribución del pago</p>
+<ul>
+  <li>🏪 Comercio: $9.000</li>
+  <li>🛵 Repartidor (envío): $1.500</li>
+  <li>🧠 Plataforma (10%): $1.000</li>
+</ul>
 
-  <ul style="text-align:left; max-width:300px; margin:auto;">
-    <li>🏪 Comercio: $9.000</li>
-    <li>🛵 Repartidor (envío): $1.500</li>
-    <li>🧠 Plataforma (10%): $1.000</li>
-  </ul>
+<h3>Forma de pago</h3>
 
-  <hr>
+<label>
+  <input type="radio" name="pago" checked> Efectivo
+</label><br>
 
-  <p><strong>Forma de pago:</strong></p>
-  <label><input type="radio" name="pago"> Efectivo</label><br>
-  <label><input type="radio" name="pago"> Billetera virtual</label>
+<label>
+  <input type="radio" name="pago"> Billetera virtual
+</label>
 
-  <br><br>
+<br><br>
 
-  <a href="pedido_enviado.html">
-    <button>Confirmar pago</button>
-  </a>
+<a href="pedido_enviado.html">
+  <button>Confirmar pago</button>
+</a>
 
-  <br><br>
+<br><br>
 
-  <a href="index.html">
-    <button>Volver al inicio</button>
-  </a>
+<a href="index.html">
+  <button>Volver al inicio</button>
+</a>
 
 </body>
 </html>
