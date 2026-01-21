@@ -2,56 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repartidor - Moto Go</title>
+  <title>Repartidor - Delivery Corrientes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <h1>🛵 Repartidor</h1>
-  <p>Estado del viaje Moto Go</p>
+  <p>Pedidos disponibles para repartir</p>
 
-  <div id="box"></div>
+  <hr>
+
+  <div class="pedido">
+    <p><strong>Pedido #001</strong></p>
+    <p>Retiro: Pizzería La 12</p>
+    <p>Entrega: Barrio Centro</p>
+
+    <a href="motogo_viaje.html">
+      <button>Tomar pedido</button>
+    </a>
+  </div>
+
+  <hr>
+
+  <div class="pedido">
+    <p><strong>Pedido #002</strong></p>
+    <p>Retiro: Kiosco Don Pepe</p>
+    <p>Entrega: Barrio San Martín</p>
+
+    <a href="motogo_viaje.html">
+      <button>Tomar pedido</button>
+    </a>
+  </div>
 
   <br>
-  <a href="login.html"><button>Volver</button></a>
 
-<script>
-const box = document.getElementById("box");
-const estado = localStorage.getItem("viajeEstado");
-
-if (!estado) {
-  box.innerHTML = "<p>No hay viajes.</p>";
-} 
-else if (estado === "pagado") {
-  box.innerHTML = `
-    <p>💰 Viaje pagado</p>
-    <button onclick="tomar()">Tomar viaje</button>
-  `;
-} 
-else if (estado === "tomado") {
-  box.innerHTML = `
-    <p>🚦 En viaje</p>
-    <button onclick="finalizar()">Finalizar viaje</button>
-  `;
-} 
-else if (estado === "finalizado") {
-  box.innerHTML = "<p>✅ Viaje finalizado</p>";
-}
-
-function tomar() {
-  localStorage.setItem("viajeEstado", "tomado");
-  location.reload();
-}
-
-function finalizar() {
-  localStorage.setItem("viajeEstado", "finalizado");
-  location.reload();
-}
-</script>
+  <a href="index.html">
+    <button>Volver al inicio</button>
+  </a>
 
 </body>
 </html>
-
-
-
