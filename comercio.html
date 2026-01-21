@@ -2,40 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro Comercio - Delivery Corrientes</title>
+  <title>Registro de Comercio</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🏪 Registro de Comercio</h1>
-  <p>Completá los datos para operar en la plataforma</p>
+<h1>🏪 Registro de Comercio</h1>
+<p>Completá los datos para operar en la plataforma</p>
 
-  <input type="text" placeholder="Nombre del comercio" style="width:80%; padding:12px; margin:8px;"><br>
-  <input type="text" placeholder="CUIL del titular" style="width:80%; padding:12px; margin:8px;"><br>
-  <input type="text" placeholder="Dirección del comercio" style="width:80%; padding:12px; margin:8px;"><br>
-  <input type="text" placeholder="Alias para cobros" style="width:80%; padding:12px; margin:8px;"><br>
-
-  <p><strong>Forma de cobro</strong></p>
-  <label><input type="checkbox"> Efectivo</label><br>
-  <label><input type="checkbox"> Billetera virtual</label><br><br>
+<form onsubmit="registrarComercio(event)">
+  <input type="text" placeholder="Nombre del comercio" required><br><br>
+  <input type="text" placeholder="CUIL del titular" required><br><br>
+  <input type="text" placeholder="Dirección del comercio" required><br><br>
+  <input type="text" placeholder="Alias para cobros" required><br><br>
 
   <label>
-    <input type="checkbox">
+    <input type="checkbox" required>
     Acepto términos legales y fiscales
-  </label>
+  </label><br><br>
 
-  <br><br>
+  <button type="submit">Enviar registro</button>
+</form>
 
-  <a href="comercio_panel.html">
-    <button>Enviar registro</button>
-  </a>
+<br>
+<a href="index.html"><button>Volver al inicio</button></a>
 
-  <br><br>
+<script>
+  // 🚨 SI YA ESTÁ REGISTRADO, NO MOSTRAR REGISTRO
+  if (localStorage.getItem("comercioRegistrado") === "true") {
+    window.location.href = "comercio_panel.html";
+  }
 
-  <a href="index.html">
-    <button>Volver al inicio</button>
-  </a>
+  function registrarComercio(e) {
+    e.preventDefault();
+    localStorage.setItem("comercioRegistrado", "true");
+    window.location.href = "comercio_panel.html";
+  }
+</script>
 
 </body>
 </html>
