@@ -3,30 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Delivery Corrientes</title>
+  <title>Ingresar - Delivery Corrientes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Ingresar</h1>
+  <h1>🔐 Ingresar</h1>
+  <p>Elegí cómo querés ingresar</p>
 
-<p>
-  <input type="checkbox" id="legal">
-  Acepto los <a href="legal.html" target="_blank">Términos y Condiciones</a>
-</p>
+  <div class="menu">
 
-<button onclick="entrar()">Continuar</button>
+    <a href="cliente.html">
+      <button>Ingresar como Cliente</button>
+    </a>
 
-<script>
-function entrar() {
-  if (!document.getElementById("legal").checked) {
-    alert("Debés aceptar los términos para continuar");
-    return;
-  }
-  location.href = "index.html";
-}
-</script>
+    <a href="comercio.html">
+      <button>Ingresar como Comercio</button>
+    </a>
+
+    <a href="repartidor.html">
+      <button>Ingresar como Repartidor</button>
+    </a>
+
+    <a href="admin.html">
+      <button>Ingresar como Administrador</button>
+    </a>
+
+  </div>
+
+  <br>
+
+  <a href="index.html">
+    <button>Volver al inicio</button>
+  </a>
 
 </body>
 </html>
-
