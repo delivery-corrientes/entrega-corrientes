@@ -8,55 +8,28 @@
 </head>
 <body>
 
-  <h1>Calificá tu pedido</h1>
+  <h1>⭐ Calificar servicio</h1>
+  <p>Tu opinión mejora la plataforma</p>
 
-  <p>Repartidor</p>
-  <select id="rep">
-    <option value="">⭐ Elegí</option>
-    <option value="1">⭐</option>
-    <option value="2">⭐⭐</option>
-    <option value="3">⭐⭐⭐</option>
-    <option value="4">⭐⭐⭐⭐</option>
-    <option value="5">⭐⭐⭐⭐⭐</option>
-  </select>
+  <h3>🛵 Repartidor</h3>
+  <p>⭐⭐⭐⭐⭐</p>
 
-  <p>Comercio</p>
-  <select id="com">
-    <option value="">⭐ Elegí</option>
-    <option value="1">⭐</option>
-    <option value="2">⭐⭐</option>
-    <option value="3">⭐⭐⭐</option>
-    <option value="4">⭐⭐⭐⭐</option>
-    <option value="5">⭐⭐⭐⭐⭐</option>
-  </select>
+  <textarea placeholder="Comentario (opcional)" style="width:80%; height:80px;"></textarea>
 
   <br><br>
-  <button onclick="guardar()">Enviar calificación</button>
+
+  <h3>🏪 Comercio</h3>
+  <p>⭐⭐⭐⭐⭐</p>
+
+  <textarea placeholder="Comentario (opcional)" style="width:80%; height:80px;"></textarea>
 
   <br><br>
-  <a href="index.html"><button>Volver al inicio</button></a>
 
-  <script>
-    function guardar() {
-      const rep = document.getElementById("rep").value;
-      const com = document.getElementById("com").value;
-
-      if (!rep || !com) {
-        alert("Calificá todo");
-        return;
-      }
-
-      const calificacion = {
-        repartidor: rep,
-        comercio: com,
-        fecha: new Date().toLocaleString()
-      };
-
-      localStorage.setItem("calificacion", JSON.stringify(calificacion));
-      alert("Gracias por calificar");
-      window.location.href = "index.html";
-    }
-  </script>
+  <a href="index.html">
+    <button>Enviar calificación</button>
+  </a>
 
 </body>
 </html>
+
+
