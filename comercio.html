@@ -3,55 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comercio</title>
+  <title>Registro Comercio - Delivery Corrientes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>Pedidos recibidos</h1>
+  <h1>🏪 Registro de Comercio</h1>
+  <p>Completá los datos para operar en la plataforma</p>
 
-  <div id="pedido"></div>
+  <input type="text" placeholder="Nombre del comercio" style="width:80%; padding:12px; margin:8px;"><br>
+  <input type="text" placeholder="CUIL del titular" style="width:80%; padding:12px; margin:8px;"><br>
+  <input type="text" placeholder="Dirección del comercio" style="width:80%; padding:12px; margin:8px;"><br>
+  <input type="text" placeholder="Alias para cobros" style="width:80%; padding:12px; margin:8px;"><br>
 
-  <h3>Alias del comercio</h3>
-  <input id="aliasComercio" type="text" placeholder="Alias / CBU del comercio"
-    style="width:80%; padding:12px; margin:10px;"><br>
+  <p><strong>Forma de cobro</strong></p>
+  <label><input type="checkbox"> Efectivo</label><br>
+  <label><input type="checkbox"> Billetera virtual</label><br><br>
 
-  <button onclick="aceptarPedido()">Aceptar pedido</button>
+  <label>
+    <input type="checkbox">
+    Acepto términos legales y fiscales
+  </label>
 
   <br><br>
-  <a href="index.html"><button>Volver</button></a>
 
-  <script>
-    const pedido = JSON.parse(localStorage.getItem("pedido"));
-    const contenedor = document.getElementById("pedido");
+  <a href="comercio_panel.html">
+    <button>Enviar registro</button>
+  </a>
 
-    if (!pedido) {
-      contenedor.innerHTML = "<p>No hay pedidos</p>";
-    } else {
-      contenedor.innerHTML = `
-        <p><strong>Producto:</strong> ${pedido.producto}</p>
-        <p><strong>Cantidad:</strong> ${pedido.cantidad}</p>
-        <p><strong>Pago:</strong> ${pedido.pago}</p>
-        <p><strong>Estado:</strong> ${pedido.estado}</p>
-      `;
-    }
+  <br><br>
 
-    function aceptarPedido() {
-      const alias = document.getElementById("aliasComercio").value;
-
-      if (!alias) {
-        alert("Ingresá el alias del comercio");
-        return;
-      }
-
-      pedido.aliasComercio = alias;
-      pedido.estado = "ACEPTADO POR COMERCIO";
-
-      localStorage.setItem("pedido", JSON.stringify(pedido));
-      alert("Pedido aceptado. Esperando repartidor.");
-      location.reload();
-    }
-  </script>
+  <a href="index.html">
+    <button>Volver al inicio</button>
+  </a>
 
 </body>
 </html>
