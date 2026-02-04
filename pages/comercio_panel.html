@@ -2,37 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel del Comercio</title>
+  <title>Panel Comercio</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🏪 Panel del Comercio</h1>
-<p>Pedidos recibidos</p>
+<h1>🏪 Pedidos recibidos</h1>
 
-<hr>
+<div id="pedido"></div>
 
-<div class="pedido">
-  <p><strong>Producto:</strong> Pizza muzzarella</p>
-  <p><strong>Cantidad:</strong> 3</p>
-  <p><strong>Pago:</strong> Billetera virtual</p>
-  <p><strong>Estado:</strong> ACEPTADO POR COMERCIO</p>
-
-  <p><strong>Alias del comercio:</strong></p>
-  <input type="text" placeholder="Alias / CBU del comercio" style="width:80%; padding:10px;">
-
-  <br><br>
-
-  <a href="repartidor_panel.html">
-    <button>Enviar a repartidor</button>
-  </a>
-</div>
-
-<hr>
+<br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
+
+<script>
+let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
+let contenedor = document.getElementById("pedido");
+
+if (!pedido) {
+  contenedor.innerHTML = "<p>No hay pedidos.</p>";
+} else {
+  let html = "<h3>Pedido nuevo</h3>";
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} - $${p.precio}</p>`;
+  });
+
+  html += `<p><strong>Estado:</strong> ${pedido.estado}</p>`;
+
+  html += `
+    <a href="repartidor_panel.html">
+      <button>Enviar a repartidor</button>
+    </a>
+  `;
+
+  contenedor.innerHTML = html;
+}
+</script>
 
 </body>
 </html>
