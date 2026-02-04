@@ -2,40 +2,40 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Entrega finalizada</title>
+  <title>Pedido entregado</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>✅ Pedido entregado</h1>
 
-<p>El pedido fue entregado correctamente al cliente.</p>
+<p>El pedido fue entregado correctamente.</p>
 
-<p>Gracias por tu trabajo 🛵</p>
+<button onclick="guardarHistorial()">Finalizar reparto</button>
 
-<br>
+<br><br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
+<a href="repartidor_panel.html">
+  <button>Volver al panel</button>
 </a>
 
 <script>
-  // Traer pedido actual
-  let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
+function guardarHistorial() {
+  let historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
 
-  // Traer historial o crear uno nuevo
-  let historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
+  const pedido = {
+    comercio: "Pizzería La 12",
+    entrega: "Barrio Centro",
+    total: "$11.500",
+    estado: "ENTREGADO"
+  };
 
-  // Guardar pedido en historial
-  if (pedido) {
-    pedido.estado = "ENTREGADO";
-    historial.push(pedido);
+  historial.push(pedido);
+  localStorage.setItem("historialPedidos", JSON.stringify(historial));
 
-    localStorage.setItem("historial_pedidos", JSON.stringify(historial));
-    localStorage.removeItem("pedido_comercio");
-  }
+  alert("Pedido guardado en el historial");
+}
 </script>
 
 </body>
 </html>
-
