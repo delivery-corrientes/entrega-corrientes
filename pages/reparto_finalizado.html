@@ -2,13 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido entregado</title>
+  <title>Entrega finalizada</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>✅ Pedido entregado</h1>
-<p>El pedido fue entregado correctamente.</p>
+
+<p>El pedido fue entregado correctamente al cliente.</p>
+
+<p>Gracias por tu trabajo 🛵</p>
 
 <br>
 
@@ -17,8 +20,22 @@
 </a>
 
 <script>
-localStorage.removeItem("pedido_comercio");
+  // Traer pedido actual
+  let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
+
+  // Traer historial o crear uno nuevo
+  let historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
+
+  // Guardar pedido en historial
+  if (pedido) {
+    pedido.estado = "ENTREGADO";
+    historial.push(pedido);
+
+    localStorage.setItem("historial_pedidos", JSON.stringify(historial));
+    localStorage.removeItem("pedido_comercio");
+  }
 </script>
 
 </body>
 </html>
+
