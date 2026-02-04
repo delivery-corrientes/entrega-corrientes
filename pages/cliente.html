@@ -13,28 +13,21 @@
 <hr>
 
 <div class="producto">
-  <img src="../img/productos/pizzeria_la12/pizza_muzza.jpg" width="200">
   <h3>Pizza Muzzarella</h3>
   <p>$3.500</p>
-  <button>Agregar</button>
+  <button onclick="agregarProducto('Pizza Muzzarella', 3500)">Agregar</button>
 </div>
 
-<hr>
-
 <div class="producto">
-  <img src="../img/productos/pizzeria_la12/pizza_napo.jpg" width="200">
   <h3>Pizza Napolitana</h3>
   <p>$4.000</p>
-  <button>Agregar</button>
+  <button onclick="agregarProducto('Pizza Napolitana', 4000)">Agregar</button>
 </div>
 
-<hr>
-
 <div class="producto">
-  <img src="../img/productos/pizzeria_la12/empanadas.jpg" width="200">
   <h3>Empanadas (docena)</h3>
   <p>$4.500</p>
-  <button>Agregar</button>
+  <button onclick="agregarProducto('Empanadas', 4500)">Agregar</button>
 </div>
 
 <br>
@@ -49,5 +42,19 @@
   <button>Volver al inicio</button>
 </a>
 
+<script>
+function agregarProducto(nombre, precio) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  carrito.push({ nombre, precio });
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  alert(nombre + " agregado al pedido");
+}
+</script>
+
 </body>
 </html>
+
+
