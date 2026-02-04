@@ -2,56 +2,37 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cliente</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Cliente - Delivery Corrientes</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <h1>Hacer un pedido</h1>
-  <p>Completá los datos</p>
+<h1>🛒 Cliente</h1>
+<p>Hacé tu pedido desde tu barrio</p>
 
-  <input id="producto" type="text" placeholder="Producto" style="width:80%; padding:12px; margin:10px;"><br>
-  <input id="cantidad" type="number" placeholder="Cantidad" style="width:80%; padding:12px; margin:10px;"><br>
+<hr>
 
-  <select id="pago" style="width:80%; padding:12px; margin:10px;">
-    <option value="">Forma de pago</option>
-    <option value="billetera">Billetera virtual</option>
-    <option value="efectivo">Efectivo</option>
-  </select><br>
+<a href="pedido.html">
+  <button>📦 Hacer un pedido</button>
+</a>
 
-  <input id="alias" type="text" placeholder="Alias / CBU del cliente"
-    style="width:80%; padding:12px; margin:10px;"><br>
+<br><br>
 
-  <button onclick="enviarPedido()">Confirmar pedido</button>
+<a href="historial.html">
+  <button>📜 Ver historial</button>
+</a>
 
-  <br><br>
-  <a href="index.html"><button>Volver</button></a>
+<br><br>
 
-  <script>
-    function enviarPedido() {
-      const producto = document.getElementById('producto').value;
-      const cantidad = document.getElementById('cantidad').value;
-      const pago = document.getElementById('pago').value;
-      const alias = document.getElementById('alias').value;
+<a href="calificacion.html">
+  <button>⭐ Calificar servicio</button>
+</a>
 
-      if (!producto || !cantidad || !pago || !alias) {
-        alert("Completá todos los campos");
-        return;
-      }
+<br><br>
 
-      const pedido = {
-        producto,
-        cantidad,
-        pago,
-        aliasCliente: alias,
-        estado: "PENDIENTE"
-      };
-
-      localStorage.setItem("pedido", JSON.stringify(pedido));
-      window.location.href = "pedido.html";
-    }
-  </script>
+<a href="../index.html">
+  <button>Volver al inicio</button>
+</a>
 
 </body>
 </html>
