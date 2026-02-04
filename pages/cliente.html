@@ -10,50 +10,54 @@
 <h1>🍕 Pizzería La 12</h1>
 <p>Elegí tus productos</p>
 
+<div class="producto">
+  <img src="../img/productos/pizzeria_la12/muzza.jpg" width="150">
+  <h3>Pizza Muzzarella</h3>
+  <p>$3.500</p>
+  <button onclick="agregar('Pizza Muzzarella', 3500)">Agregar</button>
+</div>
+
+<div class="producto">
+  <img src="../img/productos/pizzeria_la12/napolitana.jpg" width="150">
+  <h3>Pizza Napolitana</h3>
+  <p>$4.000</p>
+  <button onclick="agregar('Pizza Napolitana', 4000)">Agregar</button>
+</div>
+
 <hr>
 
-<div id="productos"></div>
-
-<br>
-
-<a href="pedido.html">
-  <button>Ir al pedido</button>
-</a>
+<h3>📍 Dirección de entrega</h3>
+<input id="direccion" type="text" placeholder="Ej: Av. Italia 1234, Barrio Centro"
+       style="width:90%; padding:10px;">
 
 <br><br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
+<button onclick="irPedido()">Ir al pedido</button>
+
+<br><br>
+<a href="../index.html"><button>Volver al inicio</button></a>
 
 <script>
-const comercio = "pizzeria_la12";
-const productos = JSON.parse(localStorage.getItem(comercio)) || [];
-const contenedor = document.getElementById("productos");
-
-if (productos.length === 0) {
-  contenedor.innerHTML = "<p>No hay productos disponibles.</p>";
-}
-
-productos.forEach(p => {
-  contenedor.innerHTML += `
-    <div class="pedido">
-      <img src="../${p.imagen}" width="150"><br>
-      <strong>${p.nombre}</strong>
-      <p>$${p.precio}</p>
-      <button onclick="agregar('${p.nombre}', ${p.precio})">Agregar</button>
-    </div>
-    <hr>
-  `;
-});
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
 function agregar(nombre, precio) {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   carrito.push({ nombre, precio });
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+  localStorage.setItem('carrito', JSON.stringify(carrito));
   alert("Producto agregado");
+}
+
+function irPedido() {
+  const dir = document.getElementById('direccion').value.trim();
+  if (dir === "") {
+    alert("Ingresá una dirección");
+    return;
+  }
+  localStorage.setItem('direccionCliente', dir);
+  window.location.href = "pedido.html";
 }
 </script>
 
 </body>
 </html>
+
+
