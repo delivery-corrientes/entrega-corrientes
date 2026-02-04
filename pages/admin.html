@@ -2,51 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Delivery Corrientes</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Administrador</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>🧠 Panel Administrador</h1>
 
-<hr>
+<div id="panel"></div>
 
-<h2>🏪 Comercios registrados</h2>
-<ul>
-  <li>Pizzería La 12 — CUIL: 20-12345678-9</li>
-  <li>Kiosco Don Pepe — CUIL: 23-87654321-4</li>
-</ul>
+<br>
 
-<hr>
-
-<h2>🛵 Repartidores registrados</h2>
-<ul>
-  <li>Juan Pérez — DNI: ***123 — Moto: Honda Wave — Casco: ✔</li>
-  <li>María López — DNI: ***456 — Bicicleta — Casco: ✔</li>
-</ul>
-
-<hr>
-
-<h2>📦 Pedidos activos</h2>
-<ul>
-  <li>Pedido #001 — Estado: En reparto</li>
-  <li>Pedido #002 — Estado: Pendiente</li>
-</ul>
-
-<hr>
-
-<h2>⚠️ Acciones</h2>
-<button>Bloquear comercio</button>
-<button>Suspender repartidor</button>
-<button>Ver reclamos</button>
-
-<br><br>
-
-<a href="index.html">
+<a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
+<script>
+let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
+let panel = document.getElementById("panel");
+
+if (!pedido) {
+  panel.innerHTML = "<p>No hay pedidos activos.</p>";
+} else {
+  let html = "<h3>Pedido activo</h3>";
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} - $${p.precio}</p>`;
+  });
+
+  html += `
+    <p><strong>Estado:</strong> ${pedido.estado}</p>
+    <p><strong>Total:</strong> $${pedido.total}</p>
+  `;
+
+  panel.innerHTML = html;
+}
+</script>
+
 </body>
 </html>
-
