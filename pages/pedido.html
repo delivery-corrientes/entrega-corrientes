@@ -2,28 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mi pedido</title>
+  <title>Pedido</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🧾 Mi pedido</h1>
+<h1>🛒 Tu pedido</h1>
 
-<div class="pedido">
-  <p><strong>Producto:</strong> Pizza Muzzarella</p>
-  <p><strong>Precio:</strong> $3.500</p>
-</div>
+<div id="carrito"></div>
 
-<div class="pedido">
-  <p><strong>Producto:</strong> Empanadas (docena)</p>
-  <p><strong>Precio:</strong> $4.500</p>
-</div>
-
-<hr>
-
-<p><strong>Subtotal:</strong> $8.000</p>
-<p><strong>Envío:</strong> $1.500</p>
-<p><strong>Total:</strong> $9.500</p>
+<h3 id="total"></h3>
 
 <br>
 
@@ -37,6 +25,45 @@
   <button>Volver al inicio</button>
 </a>
 
+<script>
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const contenedor = document.getElementById("carrito");
+let total = 0;
+
+if (carrito.length === 0) {
+  contenedor.innerHTML = "<p>El carrito está vacío.</p>";
+} else {
+  const resumen = {};
+
+  carrito.forEach(item => {
+    if (!resumen[item.nombre]) {
+      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
+    } else {
+      resumen[item.nombre].cantidad++;
+    }
+  });
+
+  for (let nombre in resumen) {
+    const item = resumen[nombre];
+    const subtotal = item.precio * item.cantidad;
+    total += subtotal;
+
+    contenedor.innerHTML += `
+      <p>
+        <strong>${nombre}</strong><br>
+        Cantidad: ${item.cantidad}<br>
+        Subtotal: $${subtotal}
+      </p>
+      <hr>
+    `;
+  }
+}
+
+document.getElementById("total").innerText = "Total: $" + total;
+localStorage.setItem("totalPedido", total);
+</script>
+
 </body>
 </html>
+
 
