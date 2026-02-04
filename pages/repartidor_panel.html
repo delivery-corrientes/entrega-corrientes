@@ -2,43 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel del Repartidor</title>
+  <title>Panel Repartidor</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🛵 Panel del Repartidor</h1>
-<p>Pedidos disponibles para repartir</p>
+<h1>🛵 Pedidos para repartir</h1>
 
-<hr>
+<div id="pedido"></div>
 
-<div class="pedido">
-  <p><strong>Pedido #001</strong></p>
-  <p><strong>Retiro:</strong> Pizzería La 12</p>
-  <p><strong>Entrega:</strong> Barrio Centro</p>
-
-  <a href="reparto_viaje.html">
-    <button>Tomar pedido</button>
-  </a>
-</div>
-
-<hr>
-
-<div class="pedido">
-  <p><strong>Pedido #002</strong></p>
-  <p><strong>Retiro:</strong> Kiosco Don Pepe</p>
-  <p><strong>Entrega:</strong> Barrio San Martín</p>
-
-  <a href="reparto_viaje.html">
-    <button>Tomar pedido</button>
-  </a>
-</div>
-
-<hr>
+<br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
+
+<script>
+let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
+let contenedor = document.getElementById("pedido");
+
+if (!pedido) {
+  contenedor.innerHTML = "<p>No hay pedidos disponibles.</p>";
+} else {
+  let html = "<h3>Pedido disponible</h3>";
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} - $${p.precio}</p>`;
+  });
+
+  html += `
+    <p><strong>Estado:</strong> ${pedido.estado}</p>
+
+    <a href="reparto_viaje.html">
+      <button>Tomar pedido</button>
+    </a>
+  `;
+
+  contenedor.innerHTML = html;
+}
+</script>
 
 </body>
 </html>
