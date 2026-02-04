@@ -2,48 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedido Entregado</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>✅ Pedido entregado</h1>
-<p>El pedido fue entregado correctamente.</p>
+  <h1>✅ Pedido entregado</h1>
 
-<script>
-  // Obtener pedido actual
-  const pedido = JSON.parse(localStorage.getItem("pedidoActual"));
+  <p>El pedido fue entregado correctamente.</p>
+  <p>Gracias por completar el reparto 🛵</p>
 
-  if (pedido) {
-    // Obtener historial existente
-    let historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
+  <hr>
 
-    // Agregar pedido al historial
-    historial.push({
-      ...pedido,
-      estado: "ENTREGADO",
-      fecha: new Date().toLocaleString()
-    });
+  <a href="historial.html">
+    <button>📜 Ver historial de pedidos</button>
+  </a>
 
-    // Guardar historial actualizado
-    localStorage.setItem("historialPedidos", JSON.stringify(historial));
+  <br>
 
-    // Limpiar pedido actual
+  <a href="../index.html">
+    <button>🏠 Volver al inicio</button>
+  </a>
+
+  <script>
+    // Guardar pedido en historial
+    const pedidoActual = JSON.parse(localStorage.getItem("pedidoActual")) || null;
+    const historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
+
+    if (pedidoActual) {
+      pedidoActual.estado = "ENTREGADO";
+      pedidoActual.fecha = new Date().toLocaleString();
+      historial.push(pedidoActual);
+      localStorage.setItem("historialPedidos", JSON.stringify(historial));
+    }
+
+    // Limpiar datos para nuevo pedido
+    localStorage.removeItem("carrito");
     localStorage.removeItem("pedidoActual");
-  }
-
-  // Redirigir al historial
-  setTimeout(() => {
-    window.location.href = "historial.html";
-  }, 2000);
-</script>
-
-<p>Redirigiendo al historial...</p>
-
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
+  </script>
 
 </body>
 </html>
-
