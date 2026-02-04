@@ -8,33 +8,39 @@
 <body>
 
 <h1>📜 Historial de pedidos</h1>
-<p>Pedidos ya finalizados</p>
+<p>Pedidos finalizados</p>
 
 <hr>
 
-<div class="pedido">
-  <p><strong>Pedido #001</strong></p>
-  <p>Comercio: Pizzería La 12</p>
-  <p>Entrega: Barrio Centro</p>
-  <p>Total: $11.500</p>
-  <p>Estado: ENTREGADO ✔</p>
-</div>
-
-<hr>
-
-<div class="pedido">
-  <p><strong>Pedido #002</strong></p>
-  <p>Comercio: Kiosco Don Pepe</p>
-  <p>Entrega: Barrio San Martín</p>
-  <p>Total: $4.200</p>
-  <p>Estado: ENTREGADO ✔</p>
-</div>
+<div id="lista-historial"></div>
 
 <br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
+
+<script>
+const contenedor = document.getElementById("lista-historial");
+const historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
+
+if (historial.length === 0) {
+  contenedor.innerHTML = "<p>No hay pedidos en el historial.</p>";
+} else {
+  historial.forEach((pedido, index) => {
+    contenedor.innerHTML += `
+      <div class="pedido">
+        <p><strong>Pedido #${index + 1}</strong></p>
+        <p>Comercio: ${pedido.comercio}</p>
+        <p>Entrega: ${pedido.entrega}</p>
+        <p>Total: ${pedido.total}</p>
+        <p>Estado: ${pedido.estado} ✔</p>
+        <hr>
+      </div>
+    `;
+  });
+}
+</script>
 
 </body>
 </html>
