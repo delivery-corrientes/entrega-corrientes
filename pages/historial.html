@@ -8,34 +8,33 @@
 <body>
 
 <h1>📜 Historial de pedidos</h1>
+<p>Pedidos ya finalizados</p>
 
-<div id="lista"></div>
+<hr>
+
+<div class="pedido">
+  <p><strong>Pedido #001</strong></p>
+  <p>Comercio: Pizzería La 12</p>
+  <p>Entrega: Barrio Centro</p>
+  <p>Total: $11.500</p>
+  <p>Estado: ENTREGADO ✔</p>
+</div>
+
+<hr>
+
+<div class="pedido">
+  <p><strong>Pedido #002</strong></p>
+  <p>Comercio: Kiosco Don Pepe</p>
+  <p>Entrega: Barrio San Martín</p>
+  <p>Total: $4.200</p>
+  <p>Estado: ENTREGADO ✔</p>
+</div>
 
 <br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
-
-<script>
-  const historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
-  const lista = document.getElementById("lista");
-
-  if (historial.length === 0) {
-    lista.innerHTML = "<p>No hay pedidos registrados.</p>";
-  } else {
-    historial.forEach((pedido, i) => {
-      lista.innerHTML += `
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-          <p><strong>Pedido #${i + 1}</strong></p>
-          <p>Producto: ${pedido.producto || "—"}</p>
-          <p>Total: $${pedido.total || "—"}</p>
-          <p>Estado: ${pedido.estado}</p>
-        </div>
-      `;
-    });
-  }
-</script>
 
 </body>
 </html>
