@@ -2,40 +2,48 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido entregado</title>
+  <title>Pedido Entregado</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>✅ Pedido entregado</h1>
-
 <p>El pedido fue entregado correctamente.</p>
 
-<button onclick="guardarHistorial()">Finalizar reparto</button>
-
-<br><br>
-
-<a href="repartidor_panel.html">
-  <button>Volver al panel</button>
-</a>
-
 <script>
-function guardarHistorial() {
-  let historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
+  // Obtener pedido actual
+  const pedido = JSON.parse(localStorage.getItem("pedidoActual"));
 
-  const pedido = {
-    comercio: "Pizzería La 12",
-    entrega: "Barrio Centro",
-    total: "$11.500",
-    estado: "ENTREGADO"
-  };
+  if (pedido) {
+    // Obtener historial existente
+    let historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
 
-  historial.push(pedido);
-  localStorage.setItem("historialPedidos", JSON.stringify(historial));
+    // Agregar pedido al historial
+    historial.push({
+      ...pedido,
+      estado: "ENTREGADO",
+      fecha: new Date().toLocaleString()
+    });
 
-  alert("Pedido guardado en el historial");
-}
+    // Guardar historial actualizado
+    localStorage.setItem("historialPedidos", JSON.stringify(historial));
+
+    // Limpiar pedido actual
+    localStorage.removeItem("pedidoActual");
+  }
+
+  // Redirigir al historial
+  setTimeout(() => {
+    window.location.href = "historial.html";
+  }, 2000);
 </script>
+
+<p>Redirigiendo al historial...</p>
+
+<a href="../index.html">
+  <button>Volver al inicio</button>
+</a>
 
 </body>
 </html>
+
