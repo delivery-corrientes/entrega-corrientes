@@ -7,11 +7,9 @@
 </head>
 <body>
 
-<h1>📦 Pedido en reparto</h1>
+<h1>🛵 Pedido en reparto</h1>
 
-<p><strong>Retiro:</strong> Pizzería La 12</p>
-<p><strong>Entrega:</strong> Barrio Centro</p>
-<p><strong>Estado:</strong> EN CAMINO 🛵</p>
+<p><strong>Estado:</strong> EN CAMINO</p>
 
 <br>
 
@@ -21,9 +19,17 @@
 
 <br><br>
 
-<a href="repartidor_panel.html">
-  <button>Volver al panel</button>
+<a href="../index.html">
+  <button>Volver al inicio</button>
 </a>
+
+<script>
+let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
+if (pedido) {
+  pedido.estado = "EN CAMINO";
+  localStorage.setItem("pedido_comercio", JSON.stringify(pedido));
+}
+</script>
 
 </body>
 </html>
