@@ -2,29 +2,27 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pago del pedido</title>
+  <title>Pago</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>💰 Pago del pedido</h1>
 
-<p><strong>Producto:</strong> Pizza Muzzarella</p>
-<p><strong>Subtotal:</strong> $10.000</p>
-<p><strong>Envío:</strong> $1.500</p>
+<p><strong>Total a pagar:</strong> $<span id="total"></span></p>
 
 <hr>
-
-<p><strong>Total a pagar:</strong> $11.500</p>
 
 <h3>Forma de pago</h3>
 
 <label>
-  <input type="radio" name="pago"> Efectivo
+  <input type="radio" name="pago" checked>
+  Efectivo
 </label><br>
 
 <label>
-  <input type="radio" name="pago"> Billetera virtual
+  <input type="radio" name="pago">
+  Billetera virtual
 </label>
 
 <br><br>
@@ -39,6 +37,10 @@
   <button>Volver al inicio</button>
 </a>
 
+<script>
+const total = localStorage.getItem("totalPedido") || 0;
+document.getElementById("total").innerText = total;
+</script>
+
 </body>
 </html>
-
