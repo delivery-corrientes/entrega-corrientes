@@ -9,16 +9,19 @@
 
 <h1>🏪 Panel del Comercio</h1>
 
-<h3>📦 Pedido recibido</h3>
+<h2>📦 Pedido recibido</h2>
 
-<ul id="lista"></ul>
+<div id="pedido"></div>
 
-<p><strong>Total:</strong> $<span id="total"></span></p>
+<p><strong>📍 Dirección del cliente:</strong></p>
+<p id="direccion"></p>
 
-<hr>
+<p><strong>Estado:</strong> EN PREPARACIÓN ⏳</p>
 
-<a href="reparto_viaje.html">
-  <button>Enviar a repartidor</button>
+<br>
+
+<a href="repartidor_panel.html">
+  <button>Asignar repartidor</button>
 </a>
 
 <br><br>
@@ -28,23 +31,21 @@
 </a>
 
 <script>
-const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-const total = localStorage.getItem("totalPedido") || 0;
+  const pedido = JSON.parse(localStorage.getItem("pedidoActual"));
 
-const lista = document.getElementById("lista");
-
-if (carrito.length === 0) {
-  lista.innerHTML = "<li>No hay pedidos aún</li>";
-} else {
-  carrito.forEach(p => {
-    const li = document.createElement("li");
-    li.innerText = `${p.nombre} x${p.cantidad} — $${p.precio * p.cantidad}`;
-    lista.appendChild(li);
-  });
-}
-
-document.getElementById("total").innerText = total;
+  if (!pedido) {
+    document.getElementById("pedido").innerHTML = "<p>No hay pedidos activos.</p>";
+  } else {
+    let html = "";
+    pedido.productos.forEach(p => {
+      html += `<p>${p.nombre} x ${p.cantidad}</p>`;
+    });
+    html += `<hr><p><strong>Total: $${pedido.total}</strong></p>`;
+    document.getElementById("pedido").innerHTML = html;
+    document.getElementById("direccion").innerText = pedido.direccion;
+  }
 </script>
 
 </body>
 </html>
+
