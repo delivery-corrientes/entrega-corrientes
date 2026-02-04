@@ -8,15 +8,9 @@
 <body>
 
 <h1>📦 Pedido enviado</h1>
-
 <p>Tu pedido fue enviado al comercio.</p>
 
-<hr>
-
 <p><strong>Estado:</strong> EN PREPARACIÓN</p>
-
-<h3>💰 Pago</h3>
-<p>Total a pagar: <strong>$11.500</strong></p>
 
 <br>
 
@@ -30,6 +24,20 @@
   <button>Volver al inicio</button>
 </a>
 
+<script>
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+let pedido = {
+  productos: carrito,
+  estado: "EN PREPARACIÓN"
+};
+
+localStorage.setItem("pedido_comercio", JSON.stringify(pedido));
+localStorage.removeItem("carrito");
+</script>
+
 </body>
 </html>
+
+
 
