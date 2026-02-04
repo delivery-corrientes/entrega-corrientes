@@ -7,40 +7,45 @@
 </head>
 <body>
 
-<h1>🛵 Pedidos para repartir</h1>
+<h1>🛵 Panel del Repartidor</h1>
+
+<h2>📦 Pedido asignado</h2>
 
 <div id="pedido"></div>
 
+<p><strong>📍 Dirección de entrega:</strong></p>
+<p id="direccion"></p>
+
+<p><strong>Estado:</strong> EN CAMINO 🚦</p>
+
 <br>
+
+<a href="reparto_viaje.html">
+  <button>Iniciar reparto</button>
+</a>
+
+<br><br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
-let contenedor = document.getElementById("pedido");
+  const pedido = JSON.parse(localStorage.getItem("pedidoActual"));
 
-if (!pedido) {
-  contenedor.innerHTML = "<p>No hay pedidos disponibles.</p>";
-} else {
-  let html = "<h3>Pedido disponible</h3>";
-
-  pedido.productos.forEach(p => {
-    html += `<p>${p.nombre} - $${p.precio}</p>`;
-  });
-
-  html += `
-    <p><strong>Estado:</strong> ${pedido.estado}</p>
-
-    <a href="reparto_viaje.html">
-      <button>Tomar pedido</button>
-    </a>
-  `;
-
-  contenedor.innerHTML = html;
-}
+  if (!pedido) {
+    document.getElementById("pedido").innerHTML = "<p>No hay pedidos asignados.</p>";
+  } else {
+    let html = "";
+    pedido.productos.forEach(p => {
+      html += `<p>${p.nombre} x ${p.cantidad}</p>`;
+    });
+    html += `<hr><p><strong>Total a cobrar: $${pedido.total}</strong></p>`;
+    document.getElementById("pedido").innerHTML = html;
+    document.getElementById("direccion").innerText = pedido.direccion;
+  }
 </script>
 
 </body>
 </html>
+
