@@ -2,16 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido</title>
+  <title>Pedido - Delivery Corrientes</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🛒 Tu pedido</h1>
+<h1>🧾 Tu pedido</h1>
 
-<div id="carrito"></div>
+<div id="pedido"></div>
 
-<h3 id="total"></h3>
+<p><strong>📍 Dirección de entrega:</strong></p>
+<p id="direccion"></p>
 
 <br>
 
@@ -26,42 +27,29 @@
 </a>
 
 <script>
-const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-const contenedor = document.getElementById("carrito");
-let total = 0;
+  const pedido = JSON.parse(localStorage.getItem("carrito")) || [];
+  const direccion = localStorage.getItem("direccionEntrega") || "No especificada";
 
-if (carrito.length === 0) {
-  contenedor.innerHTML = "<p>El carrito está vacío.</p>";
-} else {
-  const resumen = {};
+  let html = "";
+  let total = 0;
 
-  carrito.forEach(item => {
-    if (!resumen[item.nombre]) {
-      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
-    } else {
-      resumen[item.nombre].cantidad++;
-    }
+  pedido.forEach(item => {
+    html += `<p>${item.nombre} x ${item.cantidad} — $${item.precio * item.cantidad}</p>`;
+    total += item.precio * item.cantidad;
   });
 
-  for (let nombre in resumen) {
-    const item = resumen[nombre];
-    const subtotal = item.precio * item.cantidad;
-    total += subtotal;
+  html += `<hr><p><strong>Total: $${total}</strong></p>`;
+  document.getElementById("pedido").innerHTML = html;
+  document.getElementById("direccion").innerText = direccion;
 
-    contenedor.innerHTML += `
-      <p>
-        <strong>${nombre}</strong><br>
-        Cantidad: ${item.cantidad}<br>
-        Subtotal: $${subtotal}
-      </p>
-      <hr>
-    `;
-  }
-}
-
-document.getElementById("total").innerText = "Total: $" + total;
-localStorage.setItem("totalPedido", total);
+  localStorage.setItem("pedidoActual", JSON.stringify({
+    productos: pedido,
+    total,
+    direccion
+  }));
 </script>
 
 </body>
 </html>
+
+
