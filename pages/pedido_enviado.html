@@ -8,36 +8,21 @@
 <body>
 
 <h1>📦 Pedido enviado</h1>
-<p>Tu pedido fue enviado al comercio.</p>
 
+<p>Tu pedido fue enviado correctamente al comercio.</p>
 <p><strong>Estado:</strong> EN PREPARACIÓN</p>
 
 <br>
-
-<a href="pagos.html">
-  <button>Ir a pagar</button>
-</a>
-
-<br><br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-let pedido = {
-  productos: carrito,
-  estado: "EN PREPARACIÓN"
-};
-
-localStorage.setItem("pedido_comercio", JSON.stringify(pedido));
+/* 🔥 LIMPIEZA AUTOMÁTICA */
 localStorage.removeItem("carrito");
+localStorage.removeItem("totalPedido");
 </script>
 
 </body>
 </html>
-
-
-
