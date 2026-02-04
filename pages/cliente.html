@@ -2,61 +2,58 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🍕 Pizzería La 12</title>
+  <title>Cliente - Delivery Corrientes</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <h1>🍕 Pizzería La 12</h1>
-  <p>Elegí tus productos</p>
+<h1>🍕 Pizzería La 12</h1>
+<p>Elegí tus productos</p>
 
-  <hr>
+<hr>
 
-  <div class="producto">
-    <img src="../img/productos/pizzeria_la12/muzzarella.jpg" width="200">
-    <h3>Pizza Muzzarella</h3>
-    <p>$3.500</p>
-    <a href="pedido.html">
-      <button>Agregar</button>
-    </a>
-  </div>
+<div id="productos"></div>
 
-  <hr>
+<br>
 
-  <div class="producto">
-    <img src="../img/productos/pizzeria_la12/napolitana.jpg" width="200">
-    <h3>Pizza Napolitana</h3>
-    <p>$4.000</p>
-    <a href="pedido.html">
-      <button>Agregar</button>
-    </a>
-  </div>
+<a href="pedido.html">
+  <button>Ir al pedido</button>
+</a>
 
-  <hr>
+<br><br>
 
-  <div class="producto">
-    <img src="../img/productos/pizzeria_la12/empanadas.jpg" width="200">
-    <h3>Empanadas (docena)</h3>
-    <p>$4.500</p>
-    <a href="pedido.html">
-      <button>Agregar</button>
-    </a>
-  </div>
+<a href="../index.html">
+  <button>Volver al inicio</button>
+</a>
 
-  <hr>
+<script>
+const comercio = "pizzeria_la12";
+const productos = JSON.parse(localStorage.getItem(comercio)) || [];
+const contenedor = document.getElementById("productos");
 
-  <a href="pedido.html">
-    <button>🛒 Ir al pedido</button>
-  </a>
+if (productos.length === 0) {
+  contenedor.innerHTML = "<p>No hay productos disponibles.</p>";
+}
 
-  <br><br>
+productos.forEach(p => {
+  contenedor.innerHTML += `
+    <div class="pedido">
+      <img src="../${p.imagen}" width="150"><br>
+      <strong>${p.nombre}</strong>
+      <p>$${p.precio}</p>
+      <button onclick="agregar('${p.nombre}', ${p.precio})">Agregar</button>
+    </div>
+    <hr>
+  `;
+});
 
-  <a href="../index.html">
-    <button>🏠 Volver al inicio</button>
-  </a>
+function agregar(nombre, precio) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito.push({ nombre, precio });
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert("Producto agregado");
+}
+</script>
 
 </body>
 </html>
-
-
-
