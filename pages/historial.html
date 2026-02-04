@@ -9,7 +9,7 @@
 
 <h1>📜 Historial de pedidos</h1>
 
-<div id="historial"></div>
+<div id="lista"></div>
 
 <br>
 
@@ -18,23 +18,23 @@
 </a>
 
 <script>
-let historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
-let contenedor = document.getElementById("historial");
+  const historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
+  const lista = document.getElementById("lista");
 
-if (historial.length === 0) {
-  contenedor.innerHTML = "<p>No hay pedidos finalizados.</p>";
-} else {
-  historial.forEach((pedido, i) => {
-    let html = `<h3>Pedido #${i + 1}</h3>`;
-
-    pedido.productos.forEach(p => {
-      html += `<p>${p.nombre} - $${p.precio}</p>`;
+  if (historial.length === 0) {
+    lista.innerHTML = "<p>No hay pedidos registrados.</p>";
+  } else {
+    historial.forEach((pedido, i) => {
+      lista.innerHTML += `
+        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+          <p><strong>Pedido #${i + 1}</strong></p>
+          <p>Producto: ${pedido.producto || "—"}</p>
+          <p>Total: $${pedido.total || "—"}</p>
+          <p>Estado: ${pedido.estado}</p>
+        </div>
+      `;
     });
-
-    html += `<p><strong>Total:</strong> $${pedido.total}</p><hr>`;
-    contenedor.innerHTML += html;
-  });
-}
+  }
 </script>
 
 </body>
