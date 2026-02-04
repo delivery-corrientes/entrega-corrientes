@@ -2,63 +2,38 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estado del pedido</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Hacer pedido</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <h1>Estado del pedido</h1>
+<h1>📦 Hacer pedido</h1>
 
-  <div id="info"></div>
+<hr>
 
-  <button onclick="entregado()">Pedido entregado</button>
-  <button onclick="noRecibido()">Cliente no recibió</button>
-  <button onclick="rechazado()">Cliente rechazó</button>
+<h3>Producto</h3>
+<input type="text" placeholder="Ej: Pizza muzzarella" style="width:80%; padding:10px;">
 
-  <br><br>
-  <a href="index.html"><button>Volver al inicio</button></a>
+<h3>Cantidad</h3>
+<input type="number" value="1" style="width:80%; padding:10px;">
 
-  <script>
-    const pedido = JSON.parse(localStorage.getItem("pedido"));
-    const info = document.getElementById("info");
+<h3>Forma de pago</h3>
+<select style="width:80%; padding:10px;">
+  <option>Efectivo</option>
+  <option>Billetera virtual</option>
+</select>
 
-    if (!pedido || pedido.estado !== "EN CAMINO") {
-      info.innerHTML = "<p>No hay pedidos activos</p>";
-      document.querySelectorAll("button").forEach(b => b.style.display = "none");
-    } else {
-      info.innerHTML = `
-        <p><strong>Producto:</strong> ${pedido.producto}</p>
-        <p><strong>Cantidad:</strong> ${pedido.cantidad}</p>
-        <p><strong>Pago:</strong> ${pedido.pago}</p>
-        <p><strong>Alias cliente:</strong> ${pedido.aliasCliente}</p>
-        <p><strong>Alias comercio:</strong> ${pedido.aliasComercio}</p>
-        <p><strong>Alias repartidor:</strong> ${pedido.aliasRepartidor}</p>
-        <p><strong>Estado:</strong> ${pedido.estado}</p>
-      `;
-    }
+<br><br>
 
-    function entregado() {
-      pedido.estado = "ENTREGADO";
-      cerrarPedido("Pedido entregado correctamente");
-    }
+<a href="pedido_enviado.html">
+  <button>Enviar pedido</button>
+</a>
 
-    function noRecibido() {
-      pedido.estado = "NO RECIBIDO";
-      cerrarPedido("Cliente ausente. Pedido cerrado.");
-    }
+<br><br>
 
-    function rechazado() {
-      pedido.estado = "RECHAZADO POR CLIENTE";
-      cerrarPedido("Cliente rechazó el pedido.");
-    }
-
-    function cerrarPedido(mensaje) {
-      localStorage.setItem("pedido", JSON.stringify(pedido));
-      alert(mensaje);
-      location.reload();
-    }
-  </script>
+<a href="../index.html">
+  <button>Volver al inicio</button>
+</a>
 
 </body>
 </html>
