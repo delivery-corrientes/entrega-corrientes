@@ -2,16 +2,20 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido en reparto</title>
+  <title>Viaje en curso</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>🛵 Pedido en reparto</h1>
 
-<p><strong>Estado:</strong> EN CAMINO</p>
+<h3>📦 Pedido</h3>
+<ul id="lista"></ul>
 
-<br>
+<p><strong>Entrega:</strong> Barrio Centro</p>
+<p><strong>Total a cobrar:</strong> $<span id="total"></span></p>
+
+<hr>
 
 <a href="reparto_finalizado.html">
   <button>Marcar como entregado</button>
@@ -19,16 +23,27 @@
 
 <br><br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
+<a href="repartidor_panel.html">
+  <button>Volver</button>
 </a>
 
 <script>
-let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
-if (pedido) {
-  pedido.estado = "EN CAMINO";
-  localStorage.setItem("pedido_comercio", JSON.stringify(pedido));
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const total = localStorage.getItem("totalPedido") || 0;
+
+const lista = document.getElementById("lista");
+
+if (carrito.length === 0) {
+  lista.innerHTML = "<li>No hay pedido asignado</li>";
+} else {
+  carrito.forEach(p => {
+    const li = document.createElement("li");
+    li.innerText = `${p.nombre} x${p.cantidad}`;
+    lista.appendChild(li);
+  });
 }
+
+document.getElementById("total").innerText = total;
 </script>
 
 </body>
