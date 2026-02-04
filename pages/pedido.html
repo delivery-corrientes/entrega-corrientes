@@ -2,31 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Hacer pedido</title>
+  <title>Pedido - Delivery Corrientes</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>📦 Hacer pedido</h1>
+<h1>📦 Tu pedido</h1>
 
-<hr>
+<div id="lista"></div>
 
-<h3>Producto</h3>
-<input type="text" placeholder="Ej: Pizza muzzarella" style="width:80%; padding:10px;">
+<h3 id="total"></h3>
 
-<h3>Cantidad</h3>
-<input type="number" value="1" style="width:80%; padding:10px;">
-
-<h3>Forma de pago</h3>
-<select style="width:80%; padding:10px;">
-  <option>Efectivo</option>
-  <option>Billetera virtual</option>
-</select>
-
-<br><br>
+<br>
 
 <a href="pedido_enviado.html">
-  <button>Enviar pedido</button>
+  <button>Confirmar pedido</button>
 </a>
 
 <br><br>
@@ -34,6 +24,26 @@
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
+
+<script>
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let lista = document.getElementById("lista");
+let total = 0;
+
+if (carrito.length === 0) {
+  lista.innerHTML = "<p>No hay productos en el pedido.</p>";
+} else {
+  carrito.forEach(p => {
+    let item = document.createElement("p");
+    item.textContent = p.nombre + " - $" + p.precio;
+    lista.appendChild(item);
+    total += p.precio;
+  });
+
+  document.getElementById("total").textContent =
+    "Total: $" + total;
+}
+</script>
 
 </body>
 </html>
