@@ -2,44 +2,63 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Comercio</title>
+  <title>Panel del comercio</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🏪 Pedidos recibidos</h1>
+<h1>🏪 Panel del comercio</h1>
 
-<div id="pedido"></div>
+<h3>Agregar producto</h3>
+
+<input id="nombre" type="text" placeholder="Nombre del producto"><br><br>
+<input id="precio" type="number" placeholder="Precio"><br><br>
+<input id="imagen" type="text" placeholder="Ruta de imagen (ej: img/productos/pizzeria_la12/pizza.jpg)"><br><br>
+
+<button onclick="guardarProducto()">Guardar producto</button>
+
+<hr>
+
+<h3>Mis productos</h3>
+<div id="lista-productos"></div>
 
 <br>
-
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-let pedido = JSON.parse(localStorage.getItem("pedido_comercio"));
-let contenedor = document.getElementById("pedido");
+const comercio = "pizzeria_la12";
+let productos = JSON.parse(localStorage.getItem(comercio)) || [];
 
-if (!pedido) {
-  contenedor.innerHTML = "<p>No hay pedidos.</p>";
-} else {
-  let html = "<h3>Pedido nuevo</h3>";
+function guardarProducto() {
+  const nombre = document.getElementById("nombre").value;
+  const precio = document.getElementById("precio").value;
+  const imagen = document.getElementById("imagen").value;
 
-  pedido.productos.forEach(p => {
-    html += `<p>${p.nombre} - $${p.precio}</p>`;
-  });
+  productos.push({ nombre, precio, imagen });
+  localStorage.setItem(comercio, JSON.stringify(productos));
 
-  html += `<p><strong>Estado:</strong> ${pedido.estado}</p>`;
-
-  html += `
-    <a href="repartidor_panel.html">
-      <button>Enviar a repartidor</button>
-    </a>
-  `;
-
-  contenedor.innerHTML = html;
+  mostrarProductos();
 }
+
+function mostrarProductos() {
+  const contenedor = document.getElementById("lista-productos");
+  contenedor.innerHTML = "";
+
+  productos.forEach(p => {
+    contenedor.innerHTML += `
+      <div class="pedido">
+        <p><strong>${p.nombre}</strong></p>
+        <p>$${p.precio}</p>
+        <img src="../${p.imagen}" width="120">
+      </div>
+      <hr>
+    `;
+  });
+}
+
+mostrarProductos();
 </script>
 
 </body>
