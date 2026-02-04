@@ -2,63 +2,48 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel del comercio</title>
+  <title>Panel Comercio</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🏪 Panel del comercio</h1>
+<h1>🏪 Panel del Comercio</h1>
 
-<h3>Agregar producto</h3>
+<h3>📦 Pedido recibido</h3>
 
-<input id="nombre" type="text" placeholder="Nombre del producto"><br><br>
-<input id="precio" type="number" placeholder="Precio"><br><br>
-<input id="imagen" type="text" placeholder="Ruta de imagen (ej: img/productos/pizzeria_la12/pizza.jpg)"><br><br>
+<ul id="lista"></ul>
 
-<button onclick="guardarProducto()">Guardar producto</button>
+<p><strong>Total:</strong> $<span id="total"></span></p>
 
 <hr>
 
-<h3>Mis productos</h3>
-<div id="lista-productos"></div>
+<a href="reparto_viaje.html">
+  <button>Enviar a repartidor</button>
+</a>
 
-<br>
+<br><br>
+
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-const comercio = "pizzeria_la12";
-let productos = JSON.parse(localStorage.getItem(comercio)) || [];
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const total = localStorage.getItem("totalPedido") || 0;
 
-function guardarProducto() {
-  const nombre = document.getElementById("nombre").value;
-  const precio = document.getElementById("precio").value;
-  const imagen = document.getElementById("imagen").value;
+const lista = document.getElementById("lista");
 
-  productos.push({ nombre, precio, imagen });
-  localStorage.setItem(comercio, JSON.stringify(productos));
-
-  mostrarProductos();
-}
-
-function mostrarProductos() {
-  const contenedor = document.getElementById("lista-productos");
-  contenedor.innerHTML = "";
-
-  productos.forEach(p => {
-    contenedor.innerHTML += `
-      <div class="pedido">
-        <p><strong>${p.nombre}</strong></p>
-        <p>$${p.precio}</p>
-        <img src="../${p.imagen}" width="120">
-      </div>
-      <hr>
-    `;
+if (carrito.length === 0) {
+  lista.innerHTML = "<li>No hay pedidos aún</li>";
+} else {
+  carrito.forEach(p => {
+    const li = document.createElement("li");
+    li.innerText = `${p.nombre} x${p.cantidad} — $${p.precio * p.cantidad}`;
+    lista.appendChild(li);
   });
 }
 
-mostrarProductos();
+document.getElementById("total").innerText = total;
 </script>
 
 </body>
