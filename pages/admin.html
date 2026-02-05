@@ -2,40 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrador</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🧠 Panel Administrador</h1>
-<p>Control general de pedidos</p>
+  <h1>🛠️ Panel de Administración</h1>
+  <p>Zona de pruebas y control del sistema</p>
 
-<hr>
+  <hr>
 
-<div class="pedido">
-  <p><strong>Pedido #001</strong></p>
-  <p>Cliente: Juan</p>
-  <p>Comercio: Pizzería La 12</p>
-  <p>Repartidor: Carlos</p>
-  <p>Estado: FINALIZADO</p>
-  <p>Total: $11.500</p>
-</div>
+  <h3>Acciones del sistema</h3>
 
-<hr>
+  <button onclick="limpiarSistema()">
+    🧹 Limpiar sistema (RESET TOTAL)
+  </button>
 
-<div class="pedido">
-  <p><strong>Pedido #002</strong></p>
-  <p>Cliente: Ana</p>
-  <p>Comercio: Kiosco Don Pepe</p>
-  <p>Estado: EN PREPARACIÓN</p>
-  <p>Total: $4.200</p>
-</div>
+  <p style="margin-top:15px; font-size:14px; color:#555;">
+    ⚠️ Esta acción borra pedidos, historial y carrito.<br>
+    Usar solo para pruebas.
+  </p>
 
-<br>
+  <br><br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
+  <a href="../index.html">
+    <button>Volver al inicio</button>
+  </a>
+
+  <script>
+    function limpiarSistema() {
+      if (confirm("¿Seguro que querés borrar TODO el sistema?")) {
+        localStorage.clear();
+        alert("Sistema limpiado correctamente.");
+        location.reload();
+      }
+    }
+  </script>
 
 </body>
 </html>
