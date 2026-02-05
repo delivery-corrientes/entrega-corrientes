@@ -2,47 +2,38 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Pedido entregado</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pedido Entregado</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <h1>✅ Pedido entregado</h1>
+<h1>✅ Pedido entregado</h1>
 
-  <p>El pedido fue entregado correctamente.</p>
-  <p>Gracias por completar el reparto 🛵</p>
+<p>El pedido fue entregado correctamente al cliente.</p>
 
-  <hr>
+<hr>
 
-  <a href="historial.html">
-    <button>📜 Ver historial de pedidos</button>
-  </a>
+<p>Gracias por tu trabajo 💪</p>
 
-  <br>
+<br>
 
-  <a href="../index.html">
-    <button>🏠 Volver al inicio</button>
-  </a>
+<a href="repartidor_panel.html">
+  <button>Volver al panel del repartidor</button>
+</a>
 
-  <script>
-    // Guardar pedido en historial
-    const pedidoActual = JSON.parse(localStorage.getItem("pedidoActual")) || null;
-    const historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
+<br><br>
 
-    if (pedidoActual) {
-      pedidoActual.estado = "ENTREGADO";
-      pedidoActual.fecha = new Date().toLocaleString();
-      historial.push(pedidoActual);
-      localStorage.setItem("historialPedidos", JSON.stringify(historial));
-      localStorage.removeItem("pedido_actual");
-    }
+<a href="../index.html">
+  <button>Volver al inicio</button>
+</a>
 
-    // Limpiar datos para nuevo pedido
-    localStorage.removeItem("carrito");
-    localStorage.removeItem("pedidoActual");
-  </script>
+<script>
+  // Limpieza extra por seguridad
+  localStorage.removeItem('carrito');
+  localStorage.removeItem('direccion');
+  localStorage.removeItem('total');
+</script>
 
 </body>
 </html>
-
