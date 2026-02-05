@@ -2,75 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Cliente - Pizzería La 12</title>
+  <title>Pizzería La 12</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-<h1>🍕 Pizzería La 12</h1>
-<p>Elegí tus productos</p>
-
-<hr>
-
-<!-- PRODUCTO 1 -->
-<div class="card">
-  <img src="../img/productos/pizzeria_la12/muzzarella.jpg" alt="Pizza Muzzarella">
-  <h3>Pizza Muzzarella</h3>
-  <p>$3.500</p>
-  <button onclick="agregar('Pizza Muzzarella', 3500)">Agregar</button>
-</div>
-
-<!-- PRODUCTO 2 -->
-<div class="card">
-  <img src="../img/productos/pizzeria_la12/napolitana.jpg" alt="Pizza Napolitana">
-  <h3>Pizza Napolitana</h3>
-  <p>$4.000</p>
-  <button onclick="agregar('Pizza Napolitana', 4000)">Agregar</button>
-</div>
-
-<!-- PRODUCTO 3 -->
-<div class="card">
-  <img src="../img/productos/pizzeria_la12/empanadas.jpg" alt="Empanadas">
-  <h3>Empanadas (docena)</h3>
-  <p>$4.500</p>
-  <button onclick="agregar('Empanadas (docena)', 4500)">Agregar</button>
-</div>
-
-<hr>
-
-<h3>📍 Dirección de entrega</h3>
-<input type="text" id="direccion" placeholder="Ej: Av. Italia 1234, Barrio Centro">
-
-<br>
-
-<a href="pedido.html">
-  <button onclick="guardarDireccion()">Ir al pedido</button>
-</a>
-
-<br><br>
-
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
-
-<script>
-  function agregar(nombre, precio) {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito.push({ nombre, precio });
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    alert(nombre + " agregado al carrito");
-  }
-
-  function guardarDireccion() {
-    const dir = document.getElementById('direccion').value;
-    localStorage.setItem('direccion', dir);
-  }
-</script>
-
-</body>
-</html>
-
-
+  <link rel="stylesheet" href="../css/style.css
 
 
