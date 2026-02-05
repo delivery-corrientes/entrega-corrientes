@@ -2,19 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel del Comercio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Comercio</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>🏪 Panel del Comercio</h1>
 
-<p><strong>Estado del pedido:</strong></p>
-
 <div id="pedido"></div>
 
-<hr>
+<br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
@@ -22,41 +19,24 @@
 
 <script>
   const pedido = JSON.parse(localStorage.getItem("pedido"));
-
   const contenedor = document.getElementById("pedido");
 
   if (!pedido) {
-    contenedor.innerHTML = "<p>No hay pedidos activos.</p>";
+    contenedor.innerHTML = "<p>No hay pedidos nuevos.</p>";
   } else {
     let html = `
-      <p><strong>Cliente:</strong> ${pedido.cliente}</p>
-      <p><strong>Dirección:</strong> ${pedido.direccion}</p>
-      <p><strong>Total:</strong> $${pedido.total}</p>
-      <p><strong>Estado:</strong> EN PREPARACIÓN 🍳</p>
-      <hr>
-      <h3>Productos</h3>
-      <ul>
+      <h3>📍 Dirección:</h3>
+      <p>${pedido.direccion}</p>
+
+      <h3>🛒 Productos:</h3>
     `;
 
     pedido.productos.forEach(p => {
-      html += `<li>${p.nombre} x${p.cantidad}</li>`;
+      html += `
+        <p>${p.nombre} x ${p.cantidad} — $${p.precio * p.cantidad}</p>
+      `;
     });
 
     html += `
-      </ul>
-      <br>
-      <button onclick="enviarAReparto()">Marcar listo para reparto</button>
-    `;
-
-    contenedor.innerHTML = html;
-  }
-
-  function enviarAReparto() {
-    pedido.estado = "EN CAMINO";
-    localStorage.setItem("pedido", JSON.stringify(pedido));
-    alert("Pedido enviado al repartidor 🛵");
-  }
-</script>
-
-</body>
-</html>
+      <hr>
+      <h3>💰 Total: $${
