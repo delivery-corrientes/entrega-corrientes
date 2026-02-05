@@ -35,6 +35,7 @@
       pedidoActual.fecha = new Date().toLocaleString();
       historial.push(pedidoActual);
       localStorage.setItem("historialPedidos", JSON.stringify(historial));
+      localStorage.removeItem("pedido_actual");
     }
 
     // Limpiar datos para nuevo pedido
@@ -44,3 +45,4 @@
 
 </body>
 </html>
+
