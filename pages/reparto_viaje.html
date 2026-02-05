@@ -2,63 +2,79 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido en reparto</title>
+  <title>Pedido en Reparto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-  <h1>🛵 Pedido en reparto</h1>
+<h1>🛵 Pedido en reparto</h1>
 
-  <div id="pedido"></div>
+<p><strong>Estado:</strong> EN CAMINO</p>
 
-  <br>
+<p><strong>📍 Dirección de entrega:</strong> <span id="direccion"></span></p>
 
-  <button onclick="marcarEntregado()">Marcar como entregado</button>
+<hr>
 
-  <br><br>
+<h3>📦 Pedido</h3>
+<div id="pedido"></div>
 
-  <a href="repartidor_panel.html">
-    <button>Volver</button>
-  </a>
+<hr>
 
-  <script>
-    const pedido = JSON.parse(localStorage.getItem("pedido_actual"));
+<h3>Total: $<span id="total"></span></h3>
 
-    if (!pedido) {
-      document.getElementById("pedido").innerHTML = "<p>No hay pedido activo.</p>";
+<button onclick="finalizarPedido()">Marcar como entregado</button>
+
+<br><br>
+
+<a href="../index.html">
+  <button>Cancelar y volver</button>
+</a>
+
+<script>
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const direccion = localStorage.getItem('direccion') || '';
+  const total = localStorage.getItem('total') || 0;
+
+  document.getElementById('direccion').innerText = direccion;
+  document.getElementById('total').innerText = total;
+
+  const pedidoDiv = document.getElementById('pedido');
+  const resumen = {};
+
+  carrito.forEach(item => {
+    if (!resumen[item.nombre]) {
+      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
     } else {
-      let html = `
-        <p><strong>🍕 Comercio:</strong> ${pedido.comercio}</p>
-        <p><strong>📍 Dirección de entrega:</strong><br>${pedido.direccion}</p>
-        <p><strong>💰 Total:</strong> $${pedido.total}</p>
-
-        <h3>🛒 Productos</h3>
-        <ul>
-      `;
-
-      pedido.productos.forEach(p => {
-        html += `<li>${p.nombre} x${p.cantidad}</li>`;
-      });
-
-      html += `
-        </ul>
-        <p><strong>Estado:</strong> EN CAMINO 🛵</p>
-      `;
-
-      document.getElementById("pedido").innerHTML = html;
+      resumen[item.nombre].cantidad++;
     }
+  });
 
-    function marcarEntregado() {
-      let historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
-      historial.push(pedido);
+  for (let prod in resumen) {
+    const p = resumen[prod];
+    pedidoDiv.innerHTML += `
+      <p>${prod} x ${p.cantidad} — $${p.precio * p.cantidad}</p>
+    `;
+  }
 
-      localStorage.setItem("historial_pedidos", JSON.stringify(historial));
-      localStorage.removeItem("pedido_actual");
+  function finalizarPedido() {
+    const historial = JSON.parse(localStorage.getItem('historial')) || [];
 
-      window.location.href = "reparto_finalizado.html";
-    }
-  </script>
+    historial.push({
+      fecha: new Date().toLocaleString(),
+      direccion,
+      pedido: resumen,
+      total
+    });
+
+    localStorage.setItem('historial', JSON.stringify(historial));
+    localStorage.removeItem('carrito');
+    localStorage.removeItem('direccion');
+    localStorage.removeItem('total');
+
+    window.location.href = "reparto_finalizado.html";
+  }
+</script>
 
 </body>
 </html>
