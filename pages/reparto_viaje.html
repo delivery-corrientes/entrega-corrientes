@@ -2,49 +2,63 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Viaje en curso</title>
+  <title>Pedido en reparto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🛵 Pedido en reparto</h1>
+  <h1>🛵 Pedido en reparto</h1>
 
-<h3>📦 Pedido</h3>
-<ul id="lista"></ul>
+  <div id="pedido"></div>
 
-<p><strong>Entrega:</strong> Barrio Centro</p>
-<p><strong>Total a cobrar:</strong> $<span id="total"></span></p>
+  <br>
 
-<hr>
+  <button onclick="marcarEntregado()">Marcar como entregado</button>
 
-<a href="reparto_finalizado.html">
-  <button>Marcar como entregado</button>
-</a>
+  <br><br>
 
-<br><br>
+  <a href="repartidor_panel.html">
+    <button>Volver</button>
+  </a>
 
-<a href="repartidor_panel.html">
-  <button>Volver</button>
-</a>
+  <script>
+    const pedido = JSON.parse(localStorage.getItem("pedido_actual"));
 
-<script>
-const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-const total = localStorage.getItem("totalPedido") || 0;
+    if (!pedido) {
+      document.getElementById("pedido").innerHTML = "<p>No hay pedido activo.</p>";
+    } else {
+      let html = `
+        <p><strong>🍕 Comercio:</strong> ${pedido.comercio}</p>
+        <p><strong>📍 Dirección de entrega:</strong><br>${pedido.direccion}</p>
+        <p><strong>💰 Total:</strong> $${pedido.total}</p>
 
-const lista = document.getElementById("lista");
+        <h3>🛒 Productos</h3>
+        <ul>
+      `;
 
-if (carrito.length === 0) {
-  lista.innerHTML = "<li>No hay pedido asignado</li>";
-} else {
-  carrito.forEach(p => {
-    const li = document.createElement("li");
-    li.innerText = `${p.nombre} x${p.cantidad}`;
-    lista.appendChild(li);
-  });
-}
+      pedido.productos.forEach(p => {
+        html += `<li>${p.nombre} x${p.cantidad}</li>`;
+      });
 
-document.getElementById("total").innerText = total;
-</script>
+      html += `
+        </ul>
+        <p><strong>Estado:</strong> EN CAMINO 🛵</p>
+      `;
+
+      document.getElementById("pedido").innerHTML = html;
+    }
+
+    function marcarEntregado() {
+      let historial = JSON.parse(localStorage.getItem("historial_pedidos")) || [];
+      historial.push(pedido);
+
+      localStorage.setItem("historial_pedidos", JSON.stringify(historial));
+      localStorage.removeItem("pedido_actual");
+
+      window.location.href = "reparto_finalizado.html";
+    }
+  </script>
 
 </body>
 </html>
