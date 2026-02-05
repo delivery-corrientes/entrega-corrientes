@@ -1,45 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Tu pedido</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+    carrito.forEach((item, index) => {
+      total += item.precio * item.cantidad;
 
-<h1>🧾 Tu pedido</h1>
+      contenedor.innerHTML += `
+        <div class="producto">
+          <p><strong>${item.nombre}</strong></p>
+          <p>$${item.precio}</p>
 
-<p><strong>Dirección de entrega:</strong></p>
-<p id="direccion"></p>
+          <label>Cantidad:</label>
+          <input type="number" min="1" value="${item.cantidad}"
+            onchange="cambiarCantidad(${index}, this.value)">
 
-<hr>
+          <hr>
+        </div>
+      `;
+    });
 
-<div id="listaPedido"></div>
+    document.getElementById("total").innerText = total;
+    localStorage.setItem("total", total);
+  }
 
-<h3>Total: $<span id="total">0</span></h3>
+  function cambiarCantidad(index, nuevaCantidad) {
+    carrito[index].cantidad = Number(nuevaCantidad);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    mostrarPedido();
+  }
 
-<br>
+  function enviarPedido() {
+    localStorage.setItem("pedido", JSON.stringify({
+      direccion: direccion,
+      productos: carrito,
+      total: localStorage.getItem("total"),
+      estado: "pendiente"
+    }));
+  }
 
-<a href="pedido_enviado.html">
-  <button onclick="enviarPedido()">Confirmar pedido</button>
-</a>
+  mostrarPedido();
+</script>
 
-<br><br>
+</body>
+</html>
 
-<a href="cliente.html">
-  <button>Volver</button>
-</a>
-
-<script>
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  let direccion = localStorage.getItem("direccion") || "";
-
-  document.getElementById("direccion").innerText = direccion;
-
-  function mostrarPedido() {
-    let contenedor = document.getElementById("listaPedido");
-    contenedor.innerHTML = "";
-    let total = 0;
-
-    carrito.forEach((item, index) =>
