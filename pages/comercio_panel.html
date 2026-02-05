@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Comercio</title>
+  <title>Panel del Comercio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -10,52 +10,51 @@
 
 <h1>🏪 Panel del Comercio</h1>
 
-<h2>📦 Pedido recibido</h2>
-
-<p><strong>📍 Dirección:</strong> <span id="direccion"></span></p>
-
-<hr>
+<p><strong>Estado del pedido:</strong></p>
 
 <div id="pedido"></div>
 
 <hr>
-
-<h3>Total a cobrar: $<span id="total"></span></h3>
-
-<a href="reparto_viaje.html">
-  <button>Enviar a repartidor</button>
-</a>
-
-<br><br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  const direccion = localStorage.getItem('direccion') || 'No especificada';
-  const total = localStorage.getItem('total') || 0;
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
 
-  document.getElementById('direccion').innerText = direccion;
-  document.getElementById('total').innerText = total;
+  const contenedor = document.getElementById("pedido");
 
-  const pedidoDiv = document.getElementById('pedido');
-  const resumen = {};
-
-  carrito.forEach(item => {
-    if (!resumen[item.nombre]) {
-      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
-    } else {
-      resumen[item.nombre].cantidad++;
-    }
-  });
-
-  for (let prod in resumen) {
-    const p = resumen[prod];
-    pedidoDiv.innerHTML += `
-      <p>${prod} x ${p.cantidad} — $${p.precio * p.cantidad}</p>
+  if (!pedido) {
+    contenedor.innerHTML = "<p>No hay pedidos activos.</p>";
+  } else {
+    let html = `
+      <p><strong>Cliente:</strong> ${pedido.cliente}</p>
+      <p><strong>Dirección:</strong> ${pedido.direccion}</p>
+      <p><strong>Total:</strong> $${pedido.total}</p>
+      <p><strong>Estado:</strong> EN PREPARACIÓN 🍳</p>
+      <hr>
+      <h3>Productos</h3>
+      <ul>
     `;
+
+    pedido.productos.forEach(p => {
+      html += `<li>${p.nombre} x${p.cantidad}</li>`;
+    });
+
+    html += `
+      </ul>
+      <br>
+      <button onclick="enviarAReparto()">Marcar listo para reparto</button>
+    `;
+
+    contenedor.innerHTML = html;
+  }
+
+  function enviarAReparto() {
+    pedido.estado = "EN CAMINO";
+    localStorage.setItem("pedido", JSON.stringify(pedido));
+    alert("Pedido enviado al repartidor 🛵");
   }
 </script>
 
