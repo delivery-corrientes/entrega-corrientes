@@ -2,51 +2,67 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido - Delivery Corrientes</title>
+  <title>Pedido</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>🧾 Tu pedido</h1>
 
-<div id="pedido"></div>
+<p><strong>📍 Dirección:</strong> <span id="dir"></span></p>
 
-<p><strong>📍 Dirección de entrega:</strong></p>
-<p id="direccion"></p>
+<hr>
 
-<br>
+<div id="lista"></div>
+
+<hr>
+
+<h2>Total: $<span id="total">0</span></h2>
 
 <a href="pedido_enviado.html">
-  <button>Enviar pedido</button>
+  <button>Confirmar pedido</button>
 </a>
 
 <br><br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
+<a href="cliente.html">
+  <button>Volver</button>
 </a>
 
 <script>
-  const pedido = JSON.parse(localStorage.getItem("carrito")) || [];
-  const direccion = localStorage.getItem("direccionEntrega") || "No especificada";
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const direccion = localStorage.getItem('direccion') || 'No especificada';
 
-  let html = "";
+  document.getElementById('dir').innerText = direccion;
+
+  const lista = document.getElementById('lista');
   let total = 0;
 
-  pedido.forEach(item => {
-    html += `<p>${item.nombre} x ${item.cantidad} — $${item.precio * item.cantidad}</p>`;
-    total += item.precio * item.cantidad;
+  const resumen = {};
+
+  carrito.forEach(item => {
+    if (!resumen[item.nombre]) {
+      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
+    } else {
+      resumen[item.nombre].cantidad++;
+    }
   });
 
-  html += `<hr><p><strong>Total: $${total}</strong></p>`;
-  document.getElementById("pedido").innerHTML = html;
-  document.getElementById("direccion").innerText = direccion;
+  for (let producto in resumen) {
+    const p = resumen[producto];
+    const subtotal = p.precio * p.cantidad;
+    total += subtotal;
 
-  localStorage.setItem("pedidoActual", JSON.stringify({
-    productos: pedido,
-    total,
-    direccion
-  }));
+    lista.innerHTML += `
+      <p>
+        ${producto} x ${p.cantidad} — $${subtotal}
+      </p>
+    `;
+  }
+
+  document.getElementById('total').innerText = total;
+  localStorage.setItem('total', total);
 </script>
 
 </body>
