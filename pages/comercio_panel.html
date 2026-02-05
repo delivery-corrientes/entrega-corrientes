@@ -3,49 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Panel Comercio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <h1>🏪 Panel del Comercio</h1>
 
-<h2>📦 Pedido recibido</h2>
-
 <div id="pedido"></div>
 
-<p><strong>📍 Dirección del cliente:</strong></p>
-<p id="direccion"></p>
-
-<p><strong>Estado:</strong> EN PREPARACIÓN ⏳</p>
-
 <br>
-
-<a href="repartidor_panel.html">
-  <button>Asignar repartidor</button>
-</a>
-
-<br><br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-  const pedido = JSON.parse(localStorage.getItem("pedidoActual"));
+  const pedido = JSON.parse(localStorage.getItem("pedido_actual"));
 
   if (!pedido) {
-    document.getElementById("pedido").innerHTML = "<p>No hay pedidos activos.</p>";
+    document.getElementById("pedido").innerHTML = "<p>No hay pedidos pendientes.</p>";
   } else {
-    let html = "";
+    let html = `
+      <h3>📦 Pedido recibido</h3>
+      <p><strong>📍 Dirección:</strong><br>${pedido.direccion}</p>
+      <p><strong>💰 Total:</strong> $${pedido.total}</p>
+
+      <ul>
+    `;
+
     pedido.productos.forEach(p => {
-      html += `<p>${p.nombre} x ${p.cantidad}</p>`;
+      html += `<li>${p.nombre} x${p.cantidad}</li>`;
     });
-    html += `<hr><p><strong>Total: $${pedido.total}</strong></p>`;
+
+    html += `
+      </ul>
+      <p><strong>Estado:</strong> Preparando pedido 🍕</p>
+    `;
+
     document.getElementById("pedido").innerHTML = html;
-    document.getElementById("direccion").innerText = pedido.direccion;
   }
 </script>
 
 </body>
 </html>
-
