@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido</title>
+  <title>Tu pedido</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -10,18 +10,19 @@
 
 <h1>🧾 Tu pedido</h1>
 
-<p><strong>📍 Dirección:</strong> <span id="dir"></span></p>
+<p><strong>Dirección de entrega:</strong></p>
+<p id="direccion"></p>
 
 <hr>
 
-<div id="lista"></div>
+<div id="listaPedido"></div>
 
-<hr>
+<h3>Total: $<span id="total">0</span></h3>
 
-<h2>Total: $<span id="total">0</span></h2>
+<br>
 
 <a href="pedido_enviado.html">
-  <button>Confirmar pedido</button>
+  <button onclick="enviarPedido()">Confirmar pedido</button>
 </a>
 
 <br><br>
@@ -31,41 +32,14 @@
 </a>
 
 <script>
-  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  const direccion = localStorage.getItem('direccion') || 'No especificada';
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  let direccion = localStorage.getItem("direccion") || "";
 
-  document.getElementById('dir').innerText = direccion;
+  document.getElementById("direccion").innerText = direccion;
 
-  const lista = document.getElementById('lista');
-  let total = 0;
+  function mostrarPedido() {
+    let contenedor = document.getElementById("listaPedido");
+    contenedor.innerHTML = "";
+    let total = 0;
 
-  const resumen = {};
-
-  carrito.forEach(item => {
-    if (!resumen[item.nombre]) {
-      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
-    } else {
-      resumen[item.nombre].cantidad++;
-    }
-  });
-
-  for (let producto in resumen) {
-    const p = resumen[producto];
-    const subtotal = p.precio * p.cantidad;
-    total += subtotal;
-
-    lista.innerHTML += `
-      <p>
-        ${producto} x ${p.cantidad} — $${subtotal}
-      </p>
-    `;
-  }
-
-  document.getElementById('total').innerText = total;
-  localStorage.setItem('total', total);
-</script>
-
-</body>
-</html>
-
-
+    carrito.forEach((item, index) =>
