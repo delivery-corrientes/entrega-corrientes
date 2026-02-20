@@ -37,4 +37,42 @@ function cargarPedido(){
     return;
   }
 
-  if(pedido.estado !==
+  if(pedido.estado !== "pendiente"){
+    contenedor.innerHTML = "<p>No hay pedidos nuevos</p>";
+    return;
+  }
+
+  let html = `
+    <h3>📍 Dirección</h3>
+    <p>${pedido.direccion}</p>
+
+    <h3>🍕 Productos</h3>
+  `;
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} x${p.cantidad}</p>`;
+  });
+
+  html += `<h3>Total: $${pedido.total}</h3>`;
+
+  contenedor.innerHTML = html;
+}
+
+function tomarPedido(){
+
+  let pedido = JSON.parse(localStorage.getItem("pedido"));
+
+  if(!pedido) return;
+
+  pedido.estado = "en_preparacion";
+  localStorage.setItem("pedido", JSON.stringify(pedido));
+
+  alert("Pedido enviado al repartidor 🚴");
+  location.reload();
+}
+
+cargarPedido();
+</script>
+
+</body>
+</html>
