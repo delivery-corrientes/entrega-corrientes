@@ -2,40 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Historial de Pedidos</title>
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-<h1>📜 Historial de pedidos</h1>
-
-<div id="historial"></div>
-
-<script>
-  const contenedor = document.getElementById("historial");
-  const historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
-
-  if (historial.length === 0) {
-    contenedor.innerHTML = "<p>No hay pedidos en el historial.</p>";
-  } else {
-    historial.forEach((pedido, index) => {
-      contenedor.innerHTML += `
-        <div style="border:1px solid #ccc; padding:15px; margin-bottom:10px;">
-          <p><strong>Pedido #${index + 1}</strong></p>
-          <p>🍕 Comercio: ${pedido.comercio || "No especificado"}</p>
-          <p>💰 Total: $${pedido.total || "0"}</p>
-          <p>📅 Fecha: ${pedido.fecha}</p>
-          <p>📦 Estado: ${pedido.estado}</p>
-        </div>
-      `;
-    });
-  }
-</script>
-
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
-
-</body>
-</html>
+  <title>Historial de pedidos</title>
+  <meta name="viewport"
 
