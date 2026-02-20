@@ -6,61 +6,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-<h1>🛵 Pedido en camino</h1>
+<!-- NAVBAR -->
+<div class="navbar">
+  Delivery Corrientes |
+  <a href="../index.html">Inicio</a>
+  <a href="historial.html">Historial</a>
+</div>
 
-<div class="card" id="infoPedido">
-Cargando datos del pedido...
+<h1>🚚 Pedido en camino</h1>
+
+<div id="infoViaje" class="card">
+Cargando información...
 </div>
 
 <br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
+<button onclick="entregarPedido()">Marcar como entregado</button>
 
 <script>
-const pedido = JSON.parse(localStorage.getItem("pedido"));
-const contenedor = document.getElementById("infoPedido");
+function cargarViaje(){
 
-if (!pedido || pedido.estado !== "en_camino") {
-  contenedor.innerHTML = "<p>No hay entrega en curso.</p>";
-} else {
+  const contenedor = document.getElementById("infoViaje");
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
 
-  let productosHTML = "";
+  if(!pedido){
+    contenedor.innerHTML = "<p>No hay pedido activo</p>";
+    return;
+  }
 
-  pedido.productos.forEach(prod => {
-    productosHTML += `
-      <p>${prod.nombre} x ${prod.cantidad} — $${prod.precio * prod.cantidad}</p>
-    `;
-  });
+  if(pedido.estado !== "en_camino"){
+    contenedor.innerHTML = "<p>El pedido aún no salió</p>";
+    return;
+  }
 
-  contenedor.innerHTML = `
-    <h3>📍 Dirección</h3>
+  let html = `
+    <h3>📍 Entregar en:</h3>
     <p>${pedido.direccion}</p>
 
-    <hr>
-
-    <h3>🛒 Productos</h3>
-    ${productosHTML}
-
-    <hr>
-
-    <h3>💰 Total: $${pedido.total}</h3>
-
-    <br>
-
-    <button onclick="entregado()">Marcar como entregado</button>
+    <h3>🧾 Pedido</h3>
   `;
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} x${p.cantidad}</p>`;
+  });
+
+  html += `<h3>Total: $${pedido.total}</h3>`;
+
+  contenedor.innerHTML = html;
 }
 
-function entregado() {
+function entregarPedido(){
+
   let pedido = JSON.parse(localStorage.getItem("pedido"));
+  if(!pedido) return;
+
   pedido.estado = "entregado";
   localStorage.setItem("pedido", JSON.stringify(pedido));
+
   window.location.href = "reparto_finalizado.html";
 }
+
+cargarViaje();
 </script>
 
 </body>
