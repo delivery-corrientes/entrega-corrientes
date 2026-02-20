@@ -1,42 +1,100 @@
-    carrito.forEach((item, index) => {
-      total += item.precio * item.cantidad;
+   <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tu pedido</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
 
-      contenedor.innerHTML += `
-        <div class="producto">
-          <p><strong>${item.nombre}</strong></p>
-          <p>$${item.precio}</p>
+<body>
 
-          <label>Cantidad:</label>
-          <input type="number" min="1" value="${item.cantidad}"
-            onchange="cambiarCantidad(${index}, this.value)">
+<!-- NAVBAR -->
+<div class="navbar">
+  Delivery Corrientes |
+  <a href="../index.html">Inicio</a>
+  <a href="pedido.html">Pedido</a>
+  <a href="historial.html">Historial</a>
+</div>
 
-          <hr>
-        </div>
-      `;
-    });
+<h1>🧾 Tu pedido</h1>
 
-    document.getElementById("total").innerText = total;
-    localStorage.setItem("total", total);
+<div id="pedidoContainer"></div>
+
+<h2>Total: $<span id="total">0</span></h2>
+
+<br>
+
+<a href="pedido_enviado.html">
+  <button onclick="enviarPedido()">Confirmar pedido</button>
+</a>
+
+<br><br>
+
+<a href="cliente.html">
+  <button>Volver</button>
+</a>
+
+<script>
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let direccion = localStorage.getItem("direccion") || "";
+let total = 0;
+
+function mostrarPedido() {
+
+  const contenedor = document.getElementById("pedidoContainer");
+  contenedor.innerHTML = "";
+  total = 0;
+
+  if (carrito.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos en el carrito.</p>";
+    return;
   }
 
-  function cambiarCantidad(index, nuevaCantidad) {
-    carrito[index].cantidad = Number(nuevaCantidad);
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    mostrarPedido();
-  }
+  carrito.forEach((item, index) => {
 
-  function enviarPedido() {
-    localStorage.setItem("pedido", JSON.stringify({
-      direccion: direccion,
-      productos: carrito,
-      total: localStorage.getItem("total"),
-      estado: "pendiente"
-    }));
-  }
+    total += item.precio * item.cantidad;
 
+    contenedor.innerHTML += `
+      <div class="producto">
+        <p><strong>${item.nombre}</strong></p>
+        <p>$${item.precio}</p>
+
+        <label>Cantidad:</label>
+        <input type="number" min="1" value="${item.cantidad}"
+          onchange="cambiarCantidad(${index}, this.value)">
+        <hr>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+  localStorage.setItem("total", total);
+}
+
+function cambiarCantidad(index, nuevaCantidad) {
+  carrito[index].cantidad = Number(nuevaCantidad);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
   mostrarPedido();
+}
+
+function enviarPedido() {
+
+  if (!direccion) {
+    alert("Falta la dirección de entrega");
+    return;
+  }
+
+  localStorage.setItem("pedido", JSON.stringify({
+    direccion: direccion,
+    productos: carrito,
+    total: localStorage.getItem("total"),
+    estado: "pendiente"
+  }));
+}
+
+mostrarPedido();
 </script>
 
 </body>
 </html>
-
