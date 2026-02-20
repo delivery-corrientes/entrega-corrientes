@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Pedido enviado</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="UTF-8">
+<title>Estado del pedido</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-<h1>📦 ¡Pedido confirmado!</h1>
+<div class="navbar">
+  Delivery Corrientes |
+  <a href="../index.html">Inicio</a>
+  <a href="historial.html">Historial</a>
+</div>
 
-<p>Tu pedido fue enviado correctamente al comercio.</p>
+<h1>📦 Estado de tu pedido</h1>
 
-<p>En breve un repartidor lo va a retirar 🛵</p>
+<div class="card" id="estadoPedido">
+Esperando confirmación del comercio...
+</div>
 
-<hr>
+<script>
 
-<p>Gracias por elegir <strong>Delivery Corrientes</strong> 💙</p>
+function actualizarEstado(){
 
-<br>
+  const contenedor = document.getElementById("estadoPedido");
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
+  if(!pedido){
+    contenedor.innerHTML = "<h2>🎉 Tu pedido fue entregado</h2>";
+    return;
+  }
+
+  if(pedido.estado === "pendiente")
+    contenedor.innerHTML = "🧑‍🍳 El comercio está preparando tu pedido";
+
+  if(pedido.estado === "en_preparacion")
+    contenedor.innerHTML = "🛵 El repartidor está yendo a buscar tu pedido";
+
+  if(pedido.estado === "en_camino")
+    contenedor.innerHTML = "🚚 Tu pedido está en camino";
+
+}
+
+setInterval(actualizarEstado, 1500);
+actualizarEstado();
+
+</script>
 
 </body>
 </html>
