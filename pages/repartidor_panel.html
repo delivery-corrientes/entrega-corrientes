@@ -8,58 +8,59 @@
 </head>
 <body>
 
-<h1>🛵 Panel del Repartidor</h1>
+<h1>🚴 Panel del Repartidor</h1>
 
-<div id="pedido"></div>
+<div class="card" id="contenedorPedido">
+Buscando pedidos disponibles...
+</div>
 
-<hr>
+<br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-  const pedido = JSON.parse(localStorage.getItem("pedido"));
-  const contenedor = document.getElementById("pedido");
+const pedido = JSON.parse(localStorage.getItem("pedido"));
+const contenedor = document.getElementById("contenedorPedido");
 
-  if (!pedido) {
-    contenedor.innerHTML = "<p>No hay pedidos asignados.</p>";
-  } else {
-    let html = `
-      <p><strong>Cliente:</strong> ${pedido.cliente}</p>
-      <p><strong>Dirección:</strong> 📍 ${pedido.direccion}</p>
-      <p><strong>Total:</strong> $${pedido.total}</p>
-      <p><strong>Estado:</strong> ${pedido.estado} 🛵</p>
-      <hr>
-      <h3>Productos</h3>
-      <ul>
+if (!pedido || pedido.estado !== "en_reparto") {
+  contenedor.innerHTML = "<p>No hay pedidos para retirar.</p>";
+} else {
+
+  let productosHTML = "";
+
+  pedido.productos.forEach(prod => {
+    productosHTML += `
+      <p>${prod.nombre} x ${prod.cantidad} — $${prod.precio * prod.cantidad}</p>
     `;
+  });
 
-    pedido.productos.forEach(p => {
-      html += `<li>${p.nombre} x${p.cantidad}</li>`;
-    });
+  contenedor.innerHTML = `
+    <h3>📍 Dirección de entrega</h3>
+    <p>${pedido.direccion}</p>
 
-    html += `
-      </ul>
-      <br>
-      <button onclick="finalizarPedido()">Marcar como entregado</button>
-    `;
+    <hr>
 
-    contenedor.innerHTML = html;
-  }
+    <h3>🛒 Pedido</h3>
+    ${productosHTML}
 
-  function finalizarPedido() {
-    let historial = JSON.parse(localStorage.getItem("historial")) || [];
-    pedido.estado = "ENTREGADO";
+    <hr>
 
-    historial.push(pedido);
+    <h3>💰 Total: $${pedido.total}</h3>
 
-    localStorage.setItem("historial", JSON.stringify(historial));
-    localStorage.removeItem("pedido");
+    <br>
 
-    alert("Pedido entregado y guardado en historial ✅");
-    window.location.href = "reparto_finalizado.html";
-  }
+    <button onclick="tomarPedido()">Tomar pedido</button>
+  `;
+}
+
+function tomarPedido() {
+  let pedido = JSON.parse(localStorage.getItem("pedido"));
+  pedido.estado = "en_camino";
+  localStorage.setItem("pedido", JSON.stringify(pedido));
+  window.location.href = "reparto_viaje.html";
+}
 </script>
 
 </body>
