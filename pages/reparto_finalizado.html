@@ -6,39 +6,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  Delivery Corrientes |
+  <a href="../index.html">Inicio</a>
+  <a href="historial.html">Historial</a>
+</div>
 
 <h1>✅ Pedido entregado</h1>
 
-<div class="card">
-  <p>El pedido fue entregado correctamente.</p>
+<div class="card" id="resumenEntrega">
+Guardando información...
 </div>
 
 <br>
-
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-let pedido = JSON.parse(localStorage.getItem("pedido"));
+function finalizarPedido(){
 
-if (pedido) {
+  let pedido = JSON.parse(localStorage.getItem("pedido"));
+  if(!pedido) return;
 
+  // guardar historial
   let historial = JSON.parse(localStorage.getItem("historial")) || [];
-
-  historial.push({
-    fecha: new Date().toLocaleString(),
-    direccion: pedido.direccion,
-    total: pedido.total
-  });
-
+  historial.push(pedido);
   localStorage.setItem("historial", JSON.stringify(historial));
 
+  // limpiar pedido activo
   localStorage.removeItem("pedido");
   localStorage.removeItem("carrito");
   localStorage.removeItem("total");
+
+  mostrarResumen(pedido);
 }
+
+function mostrarResumen(pedido){
+
+  const contenedor = document.getElementById("resumenEntrega");
+
+  let html = `
+    <h3>📍 Dirección</h3>
+    <p>${pedido.direccion}</p>
+
+    <h3>🧾 Productos</h3>
+  `;
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} x${p.cantidad}</p>`;
+  });
+
+  html += `<h3>Total pagado: $${pedido.total}</h3>`;
+
+  contenedor.innerHTML = html;
+}
+
+finalizarPedido();
 </script>
 
 </body>
