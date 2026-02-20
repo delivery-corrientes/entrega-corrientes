@@ -2,78 +2,65 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido en Reparto</title>
+  <title>Pedido en camino</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>🛵 Pedido en reparto</h1>
+<h1>🛵 Pedido en camino</h1>
 
-<p><strong>Estado:</strong> EN CAMINO</p>
+<div class="card" id="infoPedido">
+Cargando datos del pedido...
+</div>
 
-<p><strong>📍 Dirección de entrega:</strong> <span id="direccion"></span></p>
-
-<hr>
-
-<h3>📦 Pedido</h3>
-<div id="pedido"></div>
-
-<hr>
-
-<h3>Total: $<span id="total"></span></h3>
-
-<button onclick="finalizarPedido()">Marcar como entregado</button>
-
-<br><br>
+<br>
 
 <a href="../index.html">
-  <button>Cancelar y volver</button>
+  <button>Volver al inicio</button>
 </a>
 
 <script>
-  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  const direccion = localStorage.getItem('direccion') || '';
-  const total = localStorage.getItem('total') || 0;
+const pedido = JSON.parse(localStorage.getItem("pedido"));
+const contenedor = document.getElementById("infoPedido");
 
-  document.getElementById('direccion').innerText = direccion;
-  document.getElementById('total').innerText = total;
+if (!pedido || pedido.estado !== "en_camino") {
+  contenedor.innerHTML = "<p>No hay entrega en curso.</p>";
+} else {
 
-  const pedidoDiv = document.getElementById('pedido');
-  const resumen = {};
+  let productosHTML = "";
 
-  carrito.forEach(item => {
-    if (!resumen[item.nombre]) {
-      resumen[item.nombre] = { precio: item.precio, cantidad: 1 };
-    } else {
-      resumen[item.nombre].cantidad++;
-    }
+  pedido.productos.forEach(prod => {
+    productosHTML += `
+      <p>${prod.nombre} x ${prod.cantidad} — $${prod.precio * prod.cantidad}</p>
+    `;
   });
 
-  for (let prod in resumen) {
-    const p = resumen[prod];
-    pedidoDiv.innerHTML += `
-      <p>${prod} x ${p.cantidad} — $${p.precio * p.cantidad}</p>
-    `;
-  }
+  contenedor.innerHTML = `
+    <h3>📍 Dirección</h3>
+    <p>${pedido.direccion}</p>
 
-  function finalizarPedido() {
-    const historial = JSON.parse(localStorage.getItem('historial')) || [];
+    <hr>
 
-    historial.push({
-      fecha: new Date().toLocaleString(),
-      direccion,
-      pedido: resumen,
-      total
-    });
+    <h3>🛒 Productos</h3>
+    ${productosHTML}
 
-    localStorage.setItem('historial', JSON.stringify(historial));
-    localStorage.removeItem('carrito');
-    localStorage.removeItem('direccion');
-    localStorage.removeItem('total');
+    <hr>
 
-    window.location.href = "reparto_finalizado.html";
-  }
+    <h3>💰 Total: $${pedido.total}</h3>
+
+    <br>
+
+    <button onclick="entregado()">Marcar como entregado</button>
+  `;
+}
+
+function entregado() {
+  let pedido = JSON.parse(localStorage.getItem("pedido"));
+  pedido.estado = "entregado";
+  localStorage.setItem("pedido", JSON.stringify(pedido));
+  window.location.href = "reparto_finalizado.html";
+}
 </script>
 
 </body>
