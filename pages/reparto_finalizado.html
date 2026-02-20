@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido entregado</title>
+  <title>Entrega finalizada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -10,29 +10,35 @@
 
 <h1>✅ Pedido entregado</h1>
 
-<p>El pedido fue entregado correctamente al cliente.</p>
-
-<hr>
-
-<p>Gracias por tu trabajo 💪</p>
+<div class="card">
+  <p>El pedido fue entregado correctamente.</p>
+</div>
 
 <br>
-
-<a href="repartidor_panel.html">
-  <button>Volver al panel del repartidor</button>
-</a>
-
-<br><br>
 
 <a href="../index.html">
   <button>Volver al inicio</button>
 </a>
 
 <script>
-  // Limpieza extra por seguridad
-  localStorage.removeItem('carrito');
-  localStorage.removeItem('direccion');
-  localStorage.removeItem('total');
+let pedido = JSON.parse(localStorage.getItem("pedido"));
+
+if (pedido) {
+
+  let historial = JSON.parse(localStorage.getItem("historial")) || [];
+
+  historial.push({
+    fecha: new Date().toLocaleString(),
+    direccion: pedido.direccion,
+    total: pedido.total
+  });
+
+  localStorage.setItem("historial", JSON.stringify(historial));
+
+  localStorage.removeItem("pedido");
+  localStorage.removeItem("carrito");
+  localStorage.removeItem("total");
+}
 </script>
 
 </body>
