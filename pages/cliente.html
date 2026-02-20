@@ -6,7 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  Delivery Corrientes |
+  <a href="../index.html">Inicio</a>
+  <a href="pedido.html">Pedido</a>
+  <a href="historial.html">Historial</a>
+</div>
 
 <h1>🍕 Pizzería La 12</h1>
 <p>Elegí tus productos</p>
@@ -36,9 +45,7 @@
 
 <br><br>
 
-<a href="pedido.html">
-  <button onclick="guardarDireccion()">Ir al pedido</button>
-</a>
+<button onclick="irAlPedido()">Ir al pedido</button>
 
 <br><br>
 
@@ -47,29 +54,37 @@
 </a>
 
 <script>
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  function agregarProducto(nombre, precio) {
-    carrito.push({ nombre, precio });
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert("Producto agregado");
+function agregarProducto(nombre, precio) {
+
+  let existente = carrito.find(p => p.nombre === nombre);
+
+  if (existente) {
+    existente.cantidad += 1;
+  } else {
+    carrito.push({ nombre, precio, cantidad: 1 });
   }
 
-  function guardarDireccion() {
-    const direccion = document.getElementById("direccion").value;
-    localStorage.setItem("direccion", direccion);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert("Producto agregado al carrito");
+}
+
+function irAlPedido() {
+  const direccion = document.getElementById("direccion").value.trim();
+
+  if (!direccion) {
+    alert("Ingresá una dirección de entrega");
+    return;
   }
+
+  localStorage.setItem("direccion", direccion);
+  window.location.href = "pedido.html";
+}
 </script>
 
 </body>
 </html>
-<div class="navbar">
-  Delivery Corrientes |
-  <a href="../index.html">Inicio</a>
-  <a href="pedido.html">Pedido</a>
-  <a href="historial.html">Historial</a>
-</div>
-
 
 
 
