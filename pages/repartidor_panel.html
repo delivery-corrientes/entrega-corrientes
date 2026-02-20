@@ -2,65 +2,75 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel del Repartidor</title>
+  <title>Panel del repartidor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-<h1>🚴 Panel del Repartidor</h1>
+<!-- NAVBAR -->
+<div class="navbar">
+  Delivery Corrientes |
+  <a href="../index.html">Inicio</a>
+  <a href="historial.html">Historial</a>
+</div>
 
-<div class="card" id="contenedorPedido">
-Buscando pedidos disponibles...
+<h1>🛵 Panel del repartidor</h1>
+
+<div id="pedidoRepartidor" class="card">
+Buscando pedidos...
 </div>
 
 <br>
 
-<a href="../index.html">
-  <button>Volver al inicio</button>
-</a>
+<button onclick="iniciarViaje()">Tomar viaje</button>
 
 <script>
-const pedido = JSON.parse(localStorage.getItem("pedido"));
-const contenedor = document.getElementById("contenedorPedido");
+function cargarPedido(){
 
-if (!pedido || pedido.estado !== "en_reparto") {
-  contenedor.innerHTML = "<p>No hay pedidos para retirar.</p>";
-} else {
+  const contenedor = document.getElementById("pedidoRepartidor");
+  const pedido = JSON.parse(localStorage.getItem("pedido"));
 
-  let productosHTML = "";
+  if(!pedido){
+    contenedor.innerHTML = "<p>No hay pedidos disponibles</p>";
+    return;
+  }
 
-  pedido.productos.forEach(prod => {
-    productosHTML += `
-      <p>${prod.nombre} x ${prod.cantidad} — $${prod.precio * prod.cantidad}</p>
-    `;
-  });
+  if(pedido.estado !== "en_preparacion"){
+    contenedor.innerHTML = "<p>Esperando que el comercio termine el pedido</p>";
+    return;
+  }
 
-  contenedor.innerHTML = `
-    <h3>📍 Dirección de entrega</h3>
+  let html = `
+    <h3>📍 Dirección</h3>
     <p>${pedido.direccion}</p>
 
-    <hr>
-
-    <h3>🛒 Pedido</h3>
-    ${productosHTML}
-
-    <hr>
-
-    <h3>💰 Total: $${pedido.total}</h3>
-
-    <br>
-
-    <button onclick="tomarPedido()">Tomar pedido</button>
+    <h3>🧾 Productos</h3>
   `;
+
+  pedido.productos.forEach(p => {
+    html += `<p>${p.nombre} x${p.cantidad}</p>`;
+  });
+
+  html += `<h3>Total: $${pedido.total}</h3>`;
+
+  contenedor.innerHTML = html;
 }
 
-function tomarPedido() {
+function iniciarViaje(){
+
   let pedido = JSON.parse(localStorage.getItem("pedido"));
+
+  if(!pedido) return;
+
   pedido.estado = "en_camino";
   localStorage.setItem("pedido", JSON.stringify(pedido));
+
   window.location.href = "reparto_viaje.html";
 }
+
+cargarPedido();
 </script>
 
 </body>
