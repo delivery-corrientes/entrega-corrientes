@@ -3,5 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Historial de pedidos</title>
-  <meta name="viewport"
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
 
+<h1>📊 Historial de pedidos</h1>
+
+<div class="card" id="listaHistorial">
+Cargando historial...
+</div>
+
+<br>
+
+<a href="../index.html">
+  <button>Volver al inicio</button>
+</a>
+
+<script>
+const historial = JSON.parse(localStorage.getItem("historial")) || [];
+const contenedor = document.getElementById("listaHistorial");
+
+if (historial.length === 0) {
+  contenedor.innerHTML = "<p>No hay pedidos registrados.</p>";
+} else {
+
+  let html = "";
+
+  historial.reverse().forEach(pedido => {
+    html += `
+      <div class="card">
+        <p><strong>Fecha:</strong> ${pedido.fecha}</p>
+        <p><strong>Dirección:</strong> ${pedido.direccion}</p>
+        <p><strong>Total:</strong> $${pedido.total}</p>
+      </div>
+      <br>
+    `;
+  });
+
+  contenedor.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
