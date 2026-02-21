@@ -1,0 +1,21 @@
+{
+  "name": "Delivery Corrientes",
+  "short_name": "Delivery",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff3c2e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "img/icono.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icono.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
